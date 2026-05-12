@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentes SCL — Sistema de Conteúdo Lucrativo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:#050010;font-family:'Montserrat',sans-serif;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+
+/* LOGIN SCREEN */
+.login-wrap{width:100%;max-width:400px}
+.login-box{background:radial-gradient(ellipse at 50% 0%,#2d0a5e 0%,#0d0118 60%,#050010 100%);border-radius:24px;padding:40px 28px;border:1px solid rgba(255,255,255,0.07);box-shadow:0 0 60px rgba(168,85,247,0.15);position:relative;overflow:hidden}
+.login-glow{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:280px;height:280px;background:radial-gradient(circle,rgba(168,85,247,0.3) 0%,transparent 70%);pointer-events:none}
+.login-inner{position:relative;z-index:1;text-align:center}
+.login-logo{width:56px;height:56px;border-radius:16px;border:1px solid rgba(192,132,252,0.5);display:flex;align-items:center;justify-content:center;background:rgba(192,132,252,0.08);box-shadow:0 0 20px rgba(192,132,252,0.2);margin:0 auto 20px}
+.login-logo svg{width:24px;height:24px;color:#c084fc}
+.login-badge{font-size:10px;font-weight:700;letter-spacing:0.2em;color:rgba(192,132,252,0.7);text-transform:uppercase;margin-bottom:8px}
+.login-title{font-size:22px;font-weight:900;color:#ffffff;line-height:1.2;margin-bottom:6px}
+.login-title span{color:#c084fc}
+.login-sub{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:32px;line-height:1.6}
+.login-label{font-size:11px;font-weight:600;color:rgba(255,255,255,0.5);text-align:left;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase}
+.login-input{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:13px 16px;font-size:14px;font-family:'Montserrat',sans-serif;color:#ffffff;outline:none;transition:border-color 0.2s;margin-bottom:16px;letter-spacing:0.05em}
+.login-input::placeholder{color:rgba(255,255,255,0.2)}
+.login-input:focus{border-color:rgba(192,132,252,0.6);box-shadow:0 0 12px rgba(192,132,252,0.1)}
+.login-btn{width:100%;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:12px;padding:14px;cursor:pointer;color:#ffffff;font-size:14px;font-weight:700;font-family:'Montserrat',sans-serif;letter-spacing:0.05em;transition:all 0.18s;box-shadow:0 4px 20px rgba(124,58,237,0.4)}
+.login-btn:hover{box-shadow:0 4px 28px rgba(124,58,237,0.6);transform:translateY(-1px)}
+.login-btn:active{transform:translateY(0)}
+.login-error{font-size:12px;color:#f87171;margin-top:12px;display:none}
+.login-footer{font-size:10px;color:rgba(255,255,255,0.15);margin-top:24px;letter-spacing:0.05em}
+.login-footer span{color:rgba(192,132,252,0.4)}
+
+/* SETUP SCREEN */
+.setup-wrap{width:100%;max-width:400px}
+.setup-box{background:radial-gradient(ellipse at 50% 0%,#2d0a5e 0%,#0d0118 60%,#050010 100%);border-radius:24px;padding:36px 28px;border:1px solid rgba(255,255,255,0.07);box-shadow:0 0 60px rgba(168,85,247,0.15);position:relative;overflow:hidden}
+.setup-glow{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:280px;height:280px;background:radial-gradient(circle,rgba(168,85,247,0.3) 0%,transparent 70%);pointer-events:none}
+.setup-inner{position:relative;z-index:1}
+.setup-title{font-size:18px;font-weight:800;color:#ffffff;margin-bottom:6px}
+.setup-title span{color:#c084fc}
+.setup-sub{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:28px;line-height:1.6}
+.setup-note{background:rgba(192,132,252,0.08);border:1px solid rgba(192,132,252,0.2);border-radius:10px;padding:12px 14px;font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:20px;line-height:1.6}
+.setup-note b{color:#c084fc}
+
+/* MAIN APP */
+.app-wrap{width:100%;max-width:480px}
+.w{background:radial-gradient(ellipse at 50% 0%,#2d0a5e 0%,#0d0118 55%,#050010 100%);border-radius:24px;padding:28px 20px 22px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.07);box-shadow:0 0 60px rgba(168,85,247,0.15),0 0 120px rgba(124,58,237,0.08)}
+.glow-top{position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(168,85,247,0.35) 0%,transparent 70%);pointer-events:none;z-index:0}
+.glow-left{position:absolute;top:30%;left:-80px;width:200px;height:200px;background:radial-gradient(circle,rgba(124,58,237,0.2) 0%,transparent 70%);pointer-events:none;z-index:0}
+.glow-right{position:absolute;top:15%;right:-80px;width:200px;height:200px;background:radial-gradient(circle,rgba(192,132,252,0.15) 0%,transparent 70%);pointer-events:none;z-index:0}
+.inner{position:relative;z-index:1}
+.logo-row{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.logo-icon{width:34px;height:34px;border-radius:10px;border:1px solid rgba(192,132,252,0.5);display:flex;align-items:center;justify-content:center;background:rgba(192,132,252,0.08);box-shadow:0 0 12px rgba(192,132,252,0.2);flex-shrink:0}
+.logo-icon svg{width:18px;height:18px;color:#c084fc}
+.logo-text{font-size:10px;font-weight:600;letter-spacing:0.15em;color:rgba(255,255,255,0.45);text-transform:uppercase}
+.section-label{font-size:10px;font-weight:700;letter-spacing:0.2em;color:rgba(192,132,252,0.7);text-transform:uppercase;margin-bottom:5px}
+.section-title{font-size:24px;font-weight:900;color:#ffffff;line-height:1.15;margin-bottom:5px}
+.section-title span{color:#c084fc;text-shadow:0 0 24px rgba(192,132,252,0.5)}
+.section-sub{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:22px;font-weight:400;line-height:1.5}
+.agents{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:18px}
+.ab{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px 4px 10px;cursor:pointer;text-align:center;transition:all 0.18s;position:relative;overflow:hidden}
+.ab:hover{background:rgba(192,132,252,0.08);border-color:rgba(192,132,252,0.4);box-shadow:0 0 14px rgba(192,132,252,0.15)}
+.ab.on{background:rgba(192,132,252,0.12);border-color:#a855f7;box-shadow:0 0 18px rgba(168,85,247,0.3),inset 0 1px 0 rgba(255,255,255,0.1)}
+.ab.on::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c084fc,transparent)}
+.ai{font-size:18px;color:rgba(255,255,255,0.3);margin-bottom:6px;transition:all 0.18s;display:block}
+.ab:hover .ai{color:#c084fc;text-shadow:0 0 8px rgba(192,132,252,0.6)}
+.ab.on .ai{color:#c084fc;text-shadow:0 0 12px rgba(192,132,252,0.8)}
+.al{font-size:8.5px;font-weight:700;color:rgba(255,255,255,0.3);line-height:1.3;text-transform:uppercase;letter-spacing:0.05em;transition:color 0.18s}
+.ab:hover .al,.ab.on .al{color:#ffffff}
+.chat{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.09);border-radius:18px;overflow:hidden;box-shadow:0 0 40px rgba(168,85,247,0.08),inset 0 1px 0 rgba(255,255,255,0.05)}
+.ctop{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:8px;min-height:44px;background:rgba(255,255,255,0.02)}
+.cdot{width:8px;height:8px;border-radius:50%;background:#c084fc;box-shadow:0 0 10px rgba(192,132,252,0.9),0 0 20px rgba(192,132,252,0.4);flex-shrink:0}
+.cname{font-size:12px;font-weight:700;color:#ffffff;letter-spacing:0.02em}
+.csub{font-size:10px;color:rgba(192,132,252,0.55);margin-left:auto;font-weight:600;text-transform:uppercase;letter-spacing:0.08em}
+.cinactive{font-size:11px;color:rgba(255,255,255,0.2);font-weight:600;letter-spacing:0.1em;text-transform:uppercase}
+.msgs{padding:16px;min-height:260px;max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin;scrollbar-color:rgba(192,132,252,0.2) transparent}
+.msgs::-webkit-scrollbar{width:4px}
+.msgs::-webkit-scrollbar-thumb{background:rgba(192,132,252,0.2);border-radius:2px}
+.m{max-width:86%;padding:11px 14px;font-size:13px;line-height:1.65;border-radius:14px;font-weight:400}
+.m.u{align-self:flex-end;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#ffffff;border-bottom-right-radius:4px;box-shadow:0 4px 16px rgba(124,58,237,0.4)}
+.m.b{align-self:flex-start;background:rgba(255,255,255,0.06);color:#ffffff;border:1px solid rgba(255,255,255,0.09);border-bottom-left-radius:4px}
+.m.t{align-self:flex-start;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);border-bottom-left-radius:4px;padding:12px 16px}
+.dots{display:flex;gap:5px;align-items:center}
+.dots i{width:6px;height:6px;border-radius:50%;background:#c084fc;animation:p 1.3s infinite;display:block;box-shadow:0 0 5px rgba(192,132,252,0.6)}
+.dots i:nth-child(2){animation-delay:0.22s}
+.dots i:nth-child(3){animation-delay:0.44s}
+@keyframes p{0%,80%,100%{opacity:0.2;transform:scale(0.8)}40%{opacity:1;transform:scale(1.2)}}
+.ph{color:rgba(255,255,255,0.18);font-size:13px;text-align:center;margin:auto;padding:2.5rem 1rem;line-height:1.9}
+.ph b{display:block;color:rgba(192,132,252,0.6);font-size:15px;font-weight:800;margin-bottom:8px}
+.irow{display:flex;gap:8px;padding:12px 16px;border-top:1px solid rgba(255,255,255,0.07);background:rgba(0,0,0,0.25)}
+.irow textarea{flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;font-size:13px;font-family:'Montserrat',sans-serif;color:#ffffff;resize:none;min-height:42px;max-height:100px;line-height:1.5;transition:border-color 0.2s;outline:none}
+.irow textarea::placeholder{color:rgba(255,255,255,0.2)}
+.irow textarea:focus{border-color:rgba(192,132,252,0.6);box-shadow:0 0 12px rgba(192,132,252,0.1)}
+.sbtn{background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:12px;padding:0 20px;cursor:pointer;color:#ffffff;font-size:13px;font-weight:700;font-family:'Montserrat',sans-serif;letter-spacing:0.04em;transition:all 0.18s;white-space:nowrap;box-shadow:0 4px 16px rgba(124,58,237,0.4)}
+.sbtn:hover{box-shadow:0 4px 22px rgba(124,58,237,0.6);transform:translateY(-1px)}
+.sbtn:disabled{opacity:0.2;cursor:not-allowed;transform:none;box-shadow:none}
+.footer{text-align:center;margin-top:16px;font-size:10px;color:rgba(255,255,255,0.15);letter-spacing:0.05em}
+.footer span{color:rgba(192,132,252,0.4)}
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div class="login-wrap" id="loginScreen">
+  <div class="login-box">
+    <div class="login-glow"></div>
+    <div class="login-inner">
+      <div class="login-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg>
+      </div>
+      <div class="login-badge">Sistema de Conteúdo Lucrativo</div>
+      <div class="login-title">Agentes <span>SCL</span></div>
+      <div class="login-sub">Inteligência treinada para transformar seu conteúdo em vendas</div>
+      <div class="login-label">Senha de acesso</div>
+      <input class="login-input" type="password" id="senhaInput" placeholder="Digite sua senha" onkeydown="if(event.key==='Enter')entrar()">
+      <button class="login-btn" onclick="entrar()">Acessar agora</button>
+      <div class="login-error" id="loginError">Senha incorreta. Verifique e tente novamente.</div>
+      <div class="login-footer">Powered by <span>SCL ✦ Jaqueline Lufranio</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SETUP SCREEN (first time only) -->
+<div class="setup-wrap hidden" id="setupScreen">
+  <div class="setup-box">
+    <div class="setup-glow"></div>
+    <div class="setup-inner">
+      <div class="setup-title">Configure sua <span>chave de API</span></div>
+      <div class="setup-sub">Cole sua chave da Anthropic abaixo. Ela fica salva no seu navegador e não é compartilhada com ninguém.</div>
+      <div class="setup-note"><b>Onde encontrar:</b> console.anthropic.com → Chaves de API → Criar chave</div>
+      <div class="login-label">Chave de API</div>
+      <input class="login-input" type="password" id="apiKeyInput" placeholder="sk-ant-api03-...">
+      <button class="login-btn" onclick="salvarChave()">Salvar e continuar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div class="app-wrap hidden" id="appScreen">
+  <div class="w">
+    <div class="glow-top"></div>
+    <div class="glow-left"></div>
+    <div class="glow-right"></div>
+    <div class="inner">
+      <div class="logo-row">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg>
+        </div>
+        <div class="logo-text">Sistema de Conteúdo Lucrativo</div>
+      </div>
+      <div class="section-label">Agentes SCL</div>
+      <div class="section-title">Seu método.<br><span>Em cada resposta.</span></div>
+      <div class="section-sub">Selecione um agente e descreva sua situação</div>
+      <div class="agents">
+        <button class="ab" onclick="pick(0)"><span class="ai">⊞</span><div class="al">Sistema</div></button>
+        <button class="ab" onclick="pick(1)"><span class="ai">✍</span><div class="al">Legendas</div></button>
+        <button class="ab" onclick="pick(2)"><span class="ai">▶</span><div class="al">Roteiros</div></button>
+        <button class="ab" onclick="pick(3)"><span class="ai">💡</span><div class="al">Ideias</div></button>
+        <button class="ab" onclick="pick(4)"><span class="ai">◎</span><div class="al">Posição</div></button>
+      </div>
+      <div class="chat">
+        <div class="ctop" id="ctop">
+          <span class="cinactive">Escolha um agente acima</span>
+        </div>
+        <div class="msgs" id="msgs">
+          <div class="ph" id="ph"><b>5 agentes especializados</b>Cada um treinado para uma função específica do método SCL.<br>Selecione acima e descreva sua situação.</div>
+        </div>
+        <div class="irow">
+          <textarea id="inp" placeholder="Descreva seu nicho, produto ou situação..." rows="1" onkeydown="onKey(event)" oninput="rsz(this)"></textarea>
+          <button class="sbtn" id="sb" onclick="send()" disabled>Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">Powered by <span>SCL ✦ Jaqueline Lufranio</span></div>
+</div>
+
+<script>
+const SENHA = 'SCL2026';
+
+const AGENTS = [
+  {l:"Sistema de Conteúdo",s:"organização",w:"Olá! Me conta como você está organizando seu conteúdo hoje e o que você vende.",p:"Você é o agente SCL — Sistema de Conteúdo, do método Sistema de Conteúdo Lucrativo de Jaqueline Lufranio. Ajude a organizar conteúdo como sistema de negócio, não obrigação diária. Foque em estrutura, consistência e intenção estratégica por trás de cada post. Seja direto e prático. Responda em português do Brasil."},
+  {l:"Legendas & Copy",s:"conversão",w:"Olá! Me manda o tema do conteúdo e seu nicho. Vou criar uma legenda que filtra comprador.",p:"Você é o agente SCL — Legendas & Copy de Conversão, do método Sistema de Conteúdo Lucrativo de Jaqueline Lufranio. Crie legendas estratégicas que reforçam posicionamento e abrem conversa comercial. Legenda é gatilho de ação, não descrição. Filtre comprador, gere resposta e conduza para venda sem parecer forçado. Responda em português do Brasil."},
+  {l:"Roteiros que Vendem",s:"estrutura de vídeo",w:"Olá! Qual é o seu nicho, o que você vende, e qual o objetivo desse vídeo?",p:"Você é o agente SCL — Roteiros de Conteúdo que Vendem, do método Sistema de Conteúdo Lucrativo de Jaqueline Lufranio. Crie roteiros estruturados para vídeos que geram conversa e venda. Hook forte, desenvolvimento que filtra comprador, encerramento que conduz à ação. Pergunte nicho e objetivo antes de criar. Responda em português do Brasil."},
+  {l:"Ideias Estratégicas",s:"conteúdo com função",w:"Olá! Me conta seu nicho e o que você vende. Vou gerar ideias com função clara.",p:"Você é o agente SCL — Ideias Estratégicas de Conteúdo, do método Sistema de Conteúdo Lucrativo de Jaqueline Lufranio. Gere ideias com função clara: atrair público certo, afastar não-compradores, filtrar quem está pronto para comprar. Cada ideia tem objetivo estratégico. Pergunte nicho, produto e público antes de sugerir. Responda em português do Brasil."},
+  {l:"Posicionamento",s:"público comprador",w:"Olá! Me conta o que você vende e para quem você acha que vende. Vamos clarear isso.",p:"Você é o agente SCL — Posicionamento & Público Comprador, do método Sistema de Conteúdo Lucrativo de Jaqueline Lufranio. Ajude a definir público comprador real e posicionamento claro. Seguidores não definem resultado — posicionamento e comunicação definem. Faça perguntas estratégicas. Responda em português do Brasil."}
+];
+
+let cur=null, hist=[], busy=false;
+
+function entrar() {
+  const v = document.getElementById('senhaInput').value.trim();
+  if(v === SENHA) {
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('appScreen').classList.remove('hidden');
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function salvarChave() {
+  const k = document.getElementById('apiKeyInput').value.trim();
+  if(!k.startsWith('sk-ant-')) {
+    alert('Chave inválida. Verifique e tente novamente.');
+    return;
+  }
+  localStorage.setItem('scl_api_key', k);
+  document.getElementById('setupScreen').classList.add('hidden');
+  document.getElementById('appScreen').classList.remove('hidden');
+}
+
+function pick(i) {
+  cur=i; hist=[];
+  document.querySelectorAll('.ab').forEach((b,j)=>b.classList.toggle('on',j===i));
+  document.getElementById('ctop').innerHTML=`<span class="cdot"></span><span class="cname">${AGENTS[i].l}</span><span class="csub">${AGENTS[i].s}</span>`;
+  const m=document.getElementById('msgs'); m.innerHTML='';
+  addB(AGENTS[i].w);
+  document.getElementById('sb').disabled=false;
+  document.getElementById('inp').focus();
+}
+
+function formatText(t){
+  return t
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/^### (.+)$/gm,'<br><strong>$1</strong>')
+    .replace(/^## (.+)$/gm,'<br><strong>$1</strong>')
+    .replace(/^# (.+)$/gm,'<br><strong>$1</strong>')
+    .replace(/^- (.+)$/gm,'<br>• $1')
+    .replace(/^\d+\. (.+)$/gm,'<br>$1')
+    .replace(/---/g,'<br>')
+    .replace(/\n\n/g,'<br><br>')
+    .replace(/\n/g,'<br>');
+}
+function addB(t){const ph=document.getElementById('ph');if(ph)ph.remove();const m=document.getElementById('msgs');const d=document.createElement('div');d.className='m b';d.innerHTML=formatText(t);m.appendChild(d);m.scrollTop=m.scrollHeight;}
+function addU(t){const m=document.getElementById('msgs');const d=document.createElement('div');d.className='m u';d.textContent=t;m.appendChild(d);m.scrollTop=m.scrollHeight;}
+function addTyping(){const m=document.getElementById('msgs');const d=document.createElement('div');d.className='m t';d.id='typ';d.innerHTML='<div class="dots"><i></i><i></i><i></i></div>';m.appendChild(d);m.scrollTop=m.scrollHeight;}
+function rsz(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
+function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
+
+async function send(){
+  if(busy||cur===null)return;
+  const inp=document.getElementById('inp');
+  const t=inp.value.trim();if(!t)return;
+  busy=true;document.getElementById('sb').disabled=true;
+  inp.value='';inp.style.height='auto';
+  addU(t);hist.push({role:'user',content:t});addTyping();
+  try{
+    const r=await fetch('https://green-darkness-8487.jaque-lufranio.workers.dev',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-3-5-haiku-20241022',max_tokens:1000,system:AGENTS[cur].p,messages:hist})
+    });
+    const data=await r.json();
+    const rep=data.content?.[0]?.text||'Não consegui gerar resposta. Tente novamente.';
+    hist.push({role:'assistant',content:rep});
+    document.getElementById('typ')?.remove();
+    addB(rep);
+  }catch(e){
+    document.getElementById('typ')?.remove();
+    addB('Erro de conexão. Verifique sua internet e tente novamente.');
+  }
+  busy=false;document.getElementById('sb').disabled=false;inp.focus();
+}
+</script>
+</body>
+</html>
