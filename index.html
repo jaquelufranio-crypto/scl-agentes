@@ -239,7 +239,7 @@ async function send(){
   busy=true;document.getElementById('sb').disabled=true;
   inp.value='';inp.style.height='auto';
   addU(t);hist.push({role:'user',content:t});addTyping();
-  const apiKey=localStorage.getItem('scl_api_key');
+  const apiKey='sk-ant-api03-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';
   try{
     const r=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
