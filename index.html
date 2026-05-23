@@ -2,248 +2,609 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agentes SCL — Sistema de Conteúdo Lucrativo</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Orion SCL — 7 Agentes de Conteúdo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{min-height:100vh;background:#050010;font-family:'Montserrat',sans-serif;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+html,body{height:100%;background:#0a0015;font-family:'Inter',sans-serif;color:#fff;overflow:hidden}
 
-/* LOGIN SCREEN */
-.login-wrap{width:100%;max-width:400px}
-.login-box{background:radial-gradient(ellipse at 50% 0%,#2d0a5e 0%,#0d0118 60%,#050010 100%);border-radius:24px;padding:40px 28px;border:1px solid rgba(255,255,255,0.07);box-shadow:0 0 60px rgba(168,85,247,0.15);position:relative;overflow:hidden}
-.login-glow{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:280px;height:280px;background:radial-gradient(circle,rgba(168,85,247,0.3) 0%,transparent 70%);pointer-events:none}
-.login-inner{position:relative;z-index:1;text-align:center}
-.login-logo{width:56px;height:56px;border-radius:16px;border:1px solid rgba(192,132,252,0.5);display:flex;align-items:center;justify-content:center;background:rgba(192,132,252,0.08);box-shadow:0 0 20px rgba(192,132,252,0.2);margin:0 auto 20px}
-.login-logo svg{width:24px;height:24px;color:#c084fc}
-.login-badge{font-size:10px;font-weight:700;letter-spacing:0.2em;color:rgba(192,132,252,0.7);text-transform:uppercase;margin-bottom:8px}
-.login-title{font-size:22px;font-weight:900;color:#ffffff;line-height:1.2;margin-bottom:6px}
+/* ── HIDDEN ── */
+.hidden{display:none!important}
+
+/* ══════════════════════════════════════
+   LOGIN
+══════════════════════════════════════ */
+#loginScreen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;background:#0a0015;z-index:100}
+.login-box{width:100%;max-width:380px;background:linear-gradient(160deg,#1a0535 0%,#0d0120 100%);border:1px solid rgba(192,132,252,.15);border-radius:20px;padding:40px 28px;text-align:center;position:relative;overflow:hidden}
+.login-box::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:260px;height:260px;background:radial-gradient(circle,rgba(147,51,234,.35) 0%,transparent 70%);pointer-events:none}
+.login-icon{width:52px;height:52px;border-radius:14px;border:1px solid rgba(192,132,252,.4);background:rgba(192,132,252,.08);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:22px;position:relative;z-index:1}
+.login-badge{font-size:10px;font-weight:700;letter-spacing:.2em;color:rgba(192,132,252,.7);text-transform:uppercase;margin-bottom:8px;position:relative;z-index:1}
+.login-title{font-size:22px;font-weight:900;margin-bottom:4px;position:relative;z-index:1}
 .login-title span{color:#c084fc}
-.login-sub{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:32px;line-height:1.6}
-.login-label{font-size:11px;font-weight:600;color:rgba(255,255,255,0.5);text-align:left;margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase}
-.login-input{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:13px 16px;font-size:14px;font-family:'Montserrat',sans-serif;color:#ffffff;outline:none;transition:border-color 0.2s;margin-bottom:16px;letter-spacing:0.05em}
-.login-input::placeholder{color:rgba(255,255,255,0.2)}
-.login-input:focus{border-color:rgba(192,132,252,0.6);box-shadow:0 0 12px rgba(192,132,252,0.1)}
-.login-btn{width:100%;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:12px;padding:14px;cursor:pointer;color:#ffffff;font-size:14px;font-weight:700;font-family:'Montserrat',sans-serif;letter-spacing:0.05em;transition:all 0.18s;box-shadow:0 4px 20px rgba(124,58,237,0.4)}
-.login-btn:hover{box-shadow:0 4px 28px rgba(124,58,237,0.6);transform:translateY(-1px)}
-.login-btn:active{transform:translateY(0)}
-.login-error{font-size:12px;color:#f87171;margin-top:12px;display:none}
-.login-footer{font-size:10px;color:rgba(255,255,255,0.15);margin-top:24px;letter-spacing:0.05em}
-.login-footer span{color:rgba(192,132,252,0.4)}
+.login-sub{font-size:12px;color:rgba(255,255,255,.4);margin-bottom:28px;line-height:1.6;position:relative;z-index:1}
+.login-label{font-size:11px;font-weight:600;color:rgba(255,255,255,.4);text-align:left;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;position:relative;z-index:1;display:block}
+.login-input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 16px;font-size:16px;font-family:'Inter',sans-serif;color:#fff;outline:none;margin-bottom:14px;position:relative;z-index:1;-webkit-appearance:none}
+.login-input:focus{border-color:rgba(192,132,252,.6)}
+.login-btn{width:100%;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:12px;padding:15px;font-size:15px;font-weight:700;font-family:'Inter',sans-serif;color:#fff;cursor:pointer;position:relative;z-index:1}
+.login-error{font-size:12px;color:#f87171;margin-top:10px;display:none;position:relative;z-index:1}
+.login-footer{font-size:10px;color:rgba(255,255,255,.15);margin-top:20px;position:relative;z-index:1}
+.login-footer span{color:rgba(192,132,252,.4)}
 
-/* SETUP SCREEN */
-.setup-wrap{width:100%;max-width:400px}
-.setup-box{background:radial-gradient(ellipse at 50% 0%,#2d0a5e 0%,#0d0118 60%,#050010 100%);border-radius:24px;padding:36px 28px;border:1px solid rgba(255,255,255,0.07);box-shadow:0 0 60px rgba(168,85,247,0.15);position:relative;overflow:hidden}
-.setup-glow{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:280px;height:280px;background:radial-gradient(circle,rgba(168,85,247,0.3) 0%,transparent 70%);pointer-events:none}
-.setup-inner{position:relative;z-index:1}
-.setup-title{font-size:18px;font-weight:800;color:#ffffff;margin-bottom:6px}
-.setup-title span{color:#c084fc}
-.setup-sub{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:28px;line-height:1.6}
-.setup-note{background:rgba(192,132,252,0.08);border:1px solid rgba(192,132,252,0.2);border-radius:10px;padding:12px 14px;font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:20px;line-height:1.6}
-.setup-note b{color:#c084fc}
+/* ══════════════════════════════════════
+   APP SHELL — desktop sidebar layout
+══════════════════════════════════════ */
+#appScreen{display:flex;height:100vh;overflow:hidden}
 
-/* MAIN APP */
-.app-wrap{width:100%;max-width:480px}
-.w{background:radial-gradient(ellipse at 50% 0%,#2d0a5e 0%,#0d0118 55%,#050010 100%);border-radius:24px;padding:28px 20px 22px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.07);box-shadow:0 0 60px rgba(168,85,247,0.15),0 0 120px rgba(124,58,237,0.08)}
-.glow-top{position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(168,85,247,0.35) 0%,transparent 70%);pointer-events:none;z-index:0}
-.glow-left{position:absolute;top:30%;left:-80px;width:200px;height:200px;background:radial-gradient(circle,rgba(124,58,237,0.2) 0%,transparent 70%);pointer-events:none;z-index:0}
-.glow-right{position:absolute;top:15%;right:-80px;width:200px;height:200px;background:radial-gradient(circle,rgba(192,132,252,0.15) 0%,transparent 70%);pointer-events:none;z-index:0}
-.inner{position:relative;z-index:1}
-.logo-row{display:flex;align-items:center;gap:10px;margin-bottom:22px}
-.logo-icon{width:34px;height:34px;border-radius:10px;border:1px solid rgba(192,132,252,0.5);display:flex;align-items:center;justify-content:center;background:rgba(192,132,252,0.08);box-shadow:0 0 12px rgba(192,132,252,0.2);flex-shrink:0}
-.logo-icon svg{width:18px;height:18px;color:#c084fc}
-.logo-text{font-size:10px;font-weight:600;letter-spacing:0.15em;color:rgba(255,255,255,0.45);text-transform:uppercase}
-.section-label{font-size:10px;font-weight:700;letter-spacing:0.2em;color:rgba(192,132,252,0.7);text-transform:uppercase;margin-bottom:5px}
-.section-title{font-size:24px;font-weight:900;color:#ffffff;line-height:1.15;margin-bottom:5px}
-.section-title span{color:#c084fc;text-shadow:0 0 24px rgba(192,132,252,0.5)}
-.section-sub{font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:22px;font-weight:400;line-height:1.5}
-.agents{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:18px}
-.ab{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px 4px 10px;cursor:pointer;text-align:center;transition:all 0.18s;position:relative;overflow:hidden}
-.ab:hover{background:rgba(192,132,252,0.08);border-color:rgba(192,132,252,0.4);box-shadow:0 0 14px rgba(192,132,252,0.15)}
-.ab.on{background:rgba(192,132,252,0.12);border-color:#a855f7;box-shadow:0 0 18px rgba(168,85,247,0.3),inset 0 1px 0 rgba(255,255,255,0.1)}
-.ab.on::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c084fc,transparent)}
-.ai{font-size:18px;color:rgba(255,255,255,0.3);margin-bottom:6px;transition:all 0.18s;display:block}
-.ab:hover .ai{color:#c084fc;text-shadow:0 0 8px rgba(192,132,252,0.6)}
-.ab.on .ai{color:#c084fc;text-shadow:0 0 12px rgba(192,132,252,0.8)}
-.al{font-size:8.5px;font-weight:700;color:rgba(255,255,255,0.3);line-height:1.3;text-transform:uppercase;letter-spacing:0.05em;transition:color 0.18s}
-.ab:hover .al,.ab.on .al{color:#ffffff}
-.chat{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.09);border-radius:18px;overflow:hidden;box-shadow:0 0 40px rgba(168,85,247,0.08),inset 0 1px 0 rgba(255,255,255,0.05)}
-.ctop{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:8px;min-height:44px;background:rgba(255,255,255,0.02)}
-.cdot{width:8px;height:8px;border-radius:50%;background:#c084fc;box-shadow:0 0 10px rgba(192,132,252,0.9),0 0 20px rgba(192,132,252,0.4);flex-shrink:0}
-.cname{font-size:12px;font-weight:700;color:#ffffff;letter-spacing:0.02em}
-.csub{font-size:10px;color:rgba(192,132,252,0.55);margin-left:auto;font-weight:600;text-transform:uppercase;letter-spacing:0.08em}
-.cinactive{font-size:11px;color:rgba(255,255,255,0.2);font-weight:600;letter-spacing:0.1em;text-transform:uppercase}
-.msgs{padding:16px;min-height:260px;max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin;scrollbar-color:rgba(192,132,252,0.2) transparent}
+/* SIDEBAR */
+.sidebar{width:260px;background:#100020;border-right:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;flex-shrink:0;transition:transform .25s ease;z-index:20}
+.sb-head{padding:20px 16px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.sb-logo{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.sb-logo-icon{width:30px;height:30px;border-radius:8px;background:rgba(192,132,252,.12);border:1px solid rgba(192,132,252,.3);display:flex;align-items:center;justify-content:center;font-size:14px}
+.sb-logo-name{font-size:13px;font-weight:800;letter-spacing:.04em}
+.sb-logo-name span{color:#c084fc}
+.sb-tagline{font-size:10px;color:rgba(255,255,255,.25);letter-spacing:.06em;text-transform:uppercase;padding-left:40px}
+.sb-section{padding:12px 16px 6px;font-size:10px;font-weight:700;letter-spacing:.14em;color:rgba(192,132,252,.5);text-transform:uppercase}
+.sb-agents{flex:1;overflow-y:auto;padding:0 8px 12px}
+.sb-agents::-webkit-scrollbar{width:3px}
+.sb-agents::-webkit-scrollbar-thumb{background:rgba(192,132,252,.2);border-radius:2px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:10px;cursor:pointer;transition:all .15s;margin-bottom:2px;border:1px solid transparent}
+.sb-item:hover{background:rgba(255,255,255,.04)}
+.sb-item.active{background:rgba(192,132,252,.1);border-color:rgba(192,132,252,.2)}
+.sb-item-icon{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:all .15s}
+.sb-item.active .sb-item-icon{background:rgba(192,132,252,.15);border-color:rgba(192,132,252,.3)}
+.sb-item-text{flex:1;min-width:0}
+.sb-item-name{font-size:12px;font-weight:600;color:rgba(255,255,255,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .15s}
+.sb-item.active .sb-item-name{color:#fff}
+.sb-item-sub{font-size:10px;color:rgba(255,255,255,.3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-footer{padding:12px 16px;border-top:1px solid rgba(255,255,255,.06);font-size:10px;color:rgba(255,255,255,.15);letter-spacing:.04em}
+.sb-footer span{color:rgba(192,132,252,.4)}
+
+/* MAIN CONTENT AREA */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
+
+/* DESKTOP HOME — cards grid */
+.home-view{flex:1;overflow-y:auto;padding:32px}
+.home-view::-webkit-scrollbar{width:4px}
+.home-view::-webkit-scrollbar-thumb{background:rgba(192,132,252,.2);border-radius:2px}
+.home-header{margin-bottom:32px}
+.home-eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;color:rgba(192,132,252,.7);text-transform:uppercase;margin-bottom:8px}
+.home-title{font-size:28px;font-weight:900;line-height:1.2;margin-bottom:8px}
+.home-title span{color:#c084fc}
+.home-sub{font-size:13px;color:rgba(255,255,255,.4);line-height:1.6;max-width:480px}
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.agent-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:20px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.agent-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(192,132,252,.2),transparent)}
+.agent-card:hover{background:rgba(192,132,252,.06);border-color:rgba(192,132,252,.25);transform:translateY(-2px);box-shadow:0 8px 32px rgba(147,51,234,.15)}
+.card-icon{width:40px;height:40px;border-radius:10px;background:rgba(192,132,252,.1);border:1px solid rgba(192,132,252,.2);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:14px}
+.card-num{font-size:10px;font-weight:700;letter-spacing:.12em;color:rgba(192,132,252,.6);text-transform:uppercase;margin-bottom:4px}
+.card-name{font-size:15px;font-weight:700;margin-bottom:6px}
+.card-sub{font-size:12px;color:rgba(255,255,255,.4);line-height:1.5;margin-bottom:16px}
+.card-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.4);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;color:#c084fc;transition:all .15s}
+.agent-card:hover .card-btn{background:rgba(124,58,237,.35);border-color:rgba(192,132,252,.5);color:#fff}
+
+/* CHAT VIEW */
+.chat-view{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.chat-topbar{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:12px;background:rgba(0,0,0,.2);flex-shrink:0}
+.topbar-back{width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;display:none}
+.topbar-dot{width:8px;height:8px;border-radius:50%;background:#c084fc;box-shadow:0 0 10px rgba(192,132,252,.8);flex-shrink:0}
+.topbar-name{font-size:14px;font-weight:700}
+.topbar-sub{font-size:11px;color:rgba(192,132,252,.6);font-weight:500;margin-left:auto}
+.msgs{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;scrollbar-width:thin;scrollbar-color:rgba(192,132,252,.2) transparent}
 .msgs::-webkit-scrollbar{width:4px}
-.msgs::-webkit-scrollbar-thumb{background:rgba(192,132,252,0.2);border-radius:2px}
-.m{max-width:86%;padding:11px 14px;font-size:13px;line-height:1.65;border-radius:14px;font-weight:400}
-.m.u{align-self:flex-end;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#ffffff;border-bottom-right-radius:4px;box-shadow:0 4px 16px rgba(124,58,237,0.4)}
-.m.b{align-self:flex-start;background:rgba(255,255,255,0.06);color:#ffffff;border:1px solid rgba(255,255,255,0.09);border-bottom-left-radius:4px}
-.m.t{align-self:flex-start;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);border-bottom-left-radius:4px;padding:12px 16px}
+.msgs::-webkit-scrollbar-thumb{background:rgba(192,132,252,.2);border-radius:2px}
+.msg{max-width:80%;padding:12px 16px;font-size:14px;line-height:1.7;border-radius:16px}
+.msg.u{align-self:flex-end;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border-bottom-right-radius:4px;box-shadow:0 4px 16px rgba(124,58,237,.4)}
+.msg.b{align-self:flex-start;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-bottom-left-radius:4px}
+.msg.t{align-self:flex-start;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-bottom-left-radius:4px;padding:12px 16px}
 .dots{display:flex;gap:5px;align-items:center}
-.dots i{width:6px;height:6px;border-radius:50%;background:#c084fc;animation:p 1.3s infinite;display:block;box-shadow:0 0 5px rgba(192,132,252,0.6)}
-.dots i:nth-child(2){animation-delay:0.22s}
-.dots i:nth-child(3){animation-delay:0.44s}
-@keyframes p{0%,80%,100%{opacity:0.2;transform:scale(0.8)}40%{opacity:1;transform:scale(1.2)}}
-.ph{color:rgba(255,255,255,0.18);font-size:13px;text-align:center;margin:auto;padding:2.5rem 1rem;line-height:1.9}
-.ph b{display:block;color:rgba(192,132,252,0.6);font-size:15px;font-weight:800;margin-bottom:8px}
-.irow{display:flex;gap:8px;padding:12px 16px;border-top:1px solid rgba(255,255,255,0.07);background:rgba(0,0,0,0.25)}
-.irow textarea{flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;font-size:13px;font-family:'Montserrat',sans-serif;color:#ffffff;resize:none;min-height:42px;max-height:100px;line-height:1.5;transition:border-color 0.2s;outline:none}
-.irow textarea::placeholder{color:rgba(255,255,255,0.2)}
-.irow textarea:focus{border-color:rgba(192,132,252,0.6);box-shadow:0 0 12px rgba(192,132,252,0.1)}
-.sbtn{background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:12px;padding:0 20px;cursor:pointer;color:#ffffff;font-size:13px;font-weight:700;font-family:'Montserrat',sans-serif;letter-spacing:0.04em;transition:all 0.18s;white-space:nowrap;box-shadow:0 4px 16px rgba(124,58,237,0.4)}
-.sbtn:hover{box-shadow:0 4px 22px rgba(124,58,237,0.6);transform:translateY(-1px)}
-.sbtn:disabled{opacity:0.2;cursor:not-allowed;transform:none;box-shadow:none}
-.footer{text-align:center;margin-top:16px;font-size:10px;color:rgba(255,255,255,0.15);letter-spacing:0.05em}
-.footer span{color:rgba(192,132,252,0.4)}
-.hidden{display:none}
+.dots i{width:6px;height:6px;border-radius:50%;background:#c084fc;animation:pulse 1.3s infinite;display:block}
+.dots i:nth-child(2){animation-delay:.22s}
+.dots i:nth-child(3){animation-delay:.44s}
+@keyframes pulse{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1.2)}}
+.input-area{padding:14px 20px;border-top:1px solid rgba(255,255,255,.07);background:rgba(0,0,0,.2);flex-shrink:0}
+.input-row{display:flex;gap:10px;align-items:flex-end;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:8px 8px 8px 16px;transition:border-color .2s}
+.input-row:focus-within{border-color:rgba(192,132,252,.5)}
+.input-row textarea{flex:1;background:transparent;border:none;outline:none;font-size:16px;font-family:'Inter',sans-serif;color:#fff;resize:none;min-height:24px;max-height:120px;line-height:1.6;padding:4px 0}
+.input-row textarea::placeholder{color:rgba(255,255,255,.25)}
+.send-btn{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;box-shadow:0 4px 12px rgba(124,58,237,.4)}
+.send-btn:hover{transform:scale(1.05);box-shadow:0 4px 18px rgba(124,58,237,.6)}
+.send-btn:disabled{opacity:.3;cursor:not-allowed;transform:none;box-shadow:none}
+.send-btn svg{width:16px;height:16px;color:#fff}
+
+/* MOBILE OVERLAY for sidebar */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:19}
+
+/* MOBILE TOPBAR */
+.mobile-topbar{display:none;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.07);align-items:center;gap:12px;background:#100020;flex-shrink:0;position:relative;z-index:10}
+.hamburger{width:36px;height:36px;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.hamburger span{display:block;width:16px;height:1.5px;background:#fff;margin:3px auto;transition:all .2s}
+.mobile-title{font-size:14px;font-weight:700;flex:1}
+.mobile-title span{color:#c084fc}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media(max-width:768px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay.open{display:block}
+  .mobile-topbar{display:flex}
+  .cards-grid{grid-template-columns:1fr}
+  .home-view{padding:16px}
+  .home-title{font-size:22px}
+  .topbar-back{display:flex}
+  .msg{max-width:88%;font-size:13px}
+  .msgs{padding:14px}
+  .input-area{padding:10px 12px}
+  .input-row textarea{font-size:16px}
+}
+@media(min-width:769px){
+  .topbar-back{display:none!important}
+}
+@media(min-width:1200px){
+  .cards-grid{grid-template-columns:repeat(4,1fr)}
+  .sidebar{width:280px}
+}
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
-<div class="login-wrap" id="loginScreen">
+<!-- ══ LOGIN ══ -->
+<div id="loginScreen">
   <div class="login-box">
-    <div class="login-glow"></div>
-    <div class="login-inner">
-      <div class="login-logo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg>
-      </div>
-      <div class="login-badge">Sistema de Conteúdo Lucrativo</div>
-      <div class="login-title">Agentes <span>SCL</span></div>
-      <div class="login-sub">Inteligência treinada para transformar seu conteúdo em vendas</div>
-      <div class="login-label">Senha de acesso</div>
-      <input class="login-input" type="password" id="senhaInput" placeholder="Digite sua senha" onkeydown="if(event.key==='Enter')entrar()">
-      <button class="login-btn" onclick="entrar()">Acessar agora</button>
-      <div class="login-error" id="loginError">Senha incorreta. Verifique e tente novamente.</div>
-      <div class="login-footer">Powered by <span>SCL ✦ Jaqueline Lufranio</span></div>
-    </div>
+    <div class="login-icon">🧠</div>
+    <p class="login-badge">Sistema de Conteúdo Lucrativo</p>
+    <h1 class="login-title">Orion <span>SCL</span></h1>
+    <p class="login-sub">Inteligência treinada para transformar seu conteúdo em vendas</p>
+    <label class="login-label">Senha de acesso</label>
+    <input class="login-input" id="senhaInput" type="password" placeholder="Digite sua senha" onkeydown="if(event.key==='Enter')entrar()">
+    <button class="login-btn" onclick="entrar()">Acessar agora</button>
+    <p class="login-error" id="loginError">Senha incorreta. Tente novamente.</p>
+    <p class="login-footer">Powered by <span>SCL ✦ Jaqueline Lufranio</span></p>
   </div>
 </div>
 
-<!-- SETUP SCREEN (first time only) -->
-<div class="setup-wrap hidden" id="setupScreen">
-  <div class="setup-box">
-    <div class="setup-glow"></div>
-    <div class="setup-inner">
-      <div class="setup-title">Configure sua <span>chave de API</span></div>
-      <div class="setup-sub">Cole sua chave da Anthropic abaixo. Ela fica salva no seu navegador e não é compartilhada com ninguém.</div>
-      <div class="setup-note"><b>Onde encontrar:</b> console.anthropic.com → Chaves de API → Criar chave</div>
-      <div class="login-label">Chave de API</div>
-      <input class="login-input" type="password" id="apiKeyInput" placeholder="sk-ant-api03-...">
-      <button class="login-btn" onclick="salvarChave()">Salvar e continuar</button>
-    </div>
-  </div>
-</div>
+<!-- ══ APP ══ -->
+<div id="appScreen" class="hidden">
 
-<!-- MAIN APP -->
-<div class="app-wrap hidden" id="appScreen">
-  <div class="w">
-    <div class="glow-top"></div>
-    <div class="glow-left"></div>
-    <div class="glow-right"></div>
-    <div class="inner">
-      <div class="logo-row">
-        <div class="logo-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg>
-        </div>
-        <div class="logo-text">Sistema de Conteúdo Lucrativo</div>
+  <!-- Mobile overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-head">
+      <div class="sb-logo">
+        <div class="sb-logo-icon">🧠</div>
+        <span class="sb-logo-name">Orion <span>SCL</span></span>
       </div>
-      <div class="section-label">Agentes SCL</div>
-      <div class="section-title">Seu método.<br><span>Em cada resposta.</span></div>
-      <div class="section-sub">Selecione um agente e descreva sua situação</div>
-      <div class="agents">
-        <button class="ab" onclick="pick(0)"><span class="ai">⊞</span><div class="al">Sistema</div></button>
-        <button class="ab" onclick="pick(1)"><span class="ai">✍</span><div class="al">Legendas</div></button>
-        <button class="ab" onclick="pick(2)"><span class="ai">▶</span><div class="al">Roteiros</div></button>
-        <button class="ab" onclick="pick(3)"><span class="ai">💡</span><div class="al">Ideias</div></button>
-        <button class="ab" onclick="pick(4)"><span class="ai">◎</span><div class="al">Posição</div></button>
+      <div class="sb-tagline">7 agentes especializados</div>
+    </div>
+    <div class="sb-section">Agentes</div>
+    <div class="sb-agents" id="sbAgents"></div>
+    <div class="sb-footer">Powered by <span>SCL ✦ Jaqueline Lufranio</span></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- Mobile topbar -->
+    <div class="mobile-topbar" id="mobiletopbar">
+      <div class="hamburger" onclick="openSidebar()">
+        <span></span><span></span><span></span>
       </div>
-      <div class="chat">
-        <div class="ctop" id="ctop">
-          <span class="cinactive">Escolha um agente acima</span>
+      <div class="mobile-title">Orion <span>SCL</span></div>
+    </div>
+
+    <!-- HOME VIEW (desktop cards) -->
+    <div class="home-view" id="homeView">
+      <div class="home-header">
+        <p class="home-eyebrow">Sistema de Conteúdo Lucrativo</p>
+        <h1 class="home-title">Seu método.<br><span>Em cada resposta.</span></h1>
+        <p class="home-sub">Escolha um agente especializado e descreva sua situação. Cada agente foi treinado com uma função específica do método SCL.</p>
+      </div>
+      <div class="cards-grid" id="cardsGrid"></div>
+    </div>
+
+    <!-- CHAT VIEW -->
+    <div class="chat-view hidden" id="chatView">
+      <div class="chat-topbar">
+        <div class="topbar-back" onclick="goHome()">←</div>
+        <div class="topbar-dot"></div>
+        <span class="topbar-name" id="topbarName">—</span>
+        <span class="topbar-sub" id="topbarSub">—</span>
+      </div>
+      <div class="msgs" id="msgs">
+        <div id="ph" style="color:rgba(255,255,255,.18);font-size:13px;text-align:center;margin:auto;padding:3rem 1rem;line-height:2">
+          <b style="display:block;color:rgba(192,132,252,.6);font-size:15px;font-weight:800;margin-bottom:8px">Selecione um agente</b>
+          para começar a conversa
         </div>
-        <div class="msgs" id="msgs">
-          <div class="ph" id="ph"><b>5 agentes especializados</b>Cada um treinado para uma função específica do método SCL.<br>Selecione acima e descreva sua situação.</div>
-        </div>
-        <div class="irow">
-          <textarea id="inp" placeholder="Descreva seu nicho, produto ou situação..." rows="1" onkeydown="onKey(event)" oninput="rsz(this)"></textarea>
-          <button class="sbtn" id="sb" onclick="send()" disabled>Enviar</button>
+      </div>
+      <div class="input-area"><div style="font-size:10px;color:rgba(192,132,252,.4);text-align:right;margin-bottom:6px;letter-spacing:.04em" id="msgCounter"></div>
+        <div class="input-row">
+          <textarea id="inp" placeholder="Digite sua mensagem..." rows="1" onkeydown="onKey(event)" oninput="rsz(this)"></textarea>
+          <button class="send-btn" id="sb" onclick="send()" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
         </div>
       </div>
     </div>
-  </div>
-  <div class="footer">Powered by <span>SCL ✦ Jaqueline Lufranio</span></div>
+
+  </main>
 </div>
 
 <script>
 const SENHA = 'SCL2026';
+const MSG_LIMIT = 400;
+const STORAGE_KEY = 'orion_usage';
+
+function getUsage(){
+  try{
+    const d = JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');
+    const now = new Date();
+    const month = now.getFullYear()+'-'+(now.getMonth()+1);
+    if(d.month !== month) return {month, count:0};
+    return d;
+  } catch(e){ return {month:'', count:0}; }
+}
+
+function addUsage(){
+  const d = getUsage();
+  d.count++;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
+}
+
+function getRemainingMsgs(){
+  return Math.max(0, MSG_LIMIT - getUsage().count);
+}
+
+function updateCounter(){
+  const rem = getRemainingMsgs();
+  const el = document.getElementById('msgCounter');
+  if(el) el.textContent = rem + ' mensagens restantes este mês';
+  const btn = document.getElementById('sb');
+  if(rem <= 0 && btn){
+    btn.disabled = true;
+    const inp = document.getElementById('inp');
+    if(inp){ inp.placeholder = 'Limite mensal atingido.'; inp.disabled = true; }
+  }
+}
 
 const AGENTS = [
-  {l:"Sistema de Conteúdo",s:"organização",w:"Olá! Me conta como você está organizando seu conteúdo hoje e o que você vende.",p:"Você é o agente SCL — Sistema de Conteúdo, do método Sistema de Conteúdo Lucrativo de Jaqueline Lufranio. Ajude a organizar conteúdo como sistema de negócio, não obrigação diária. Foque em estrutura, consistência e intenção estratégica por trás de cada post. Seja direto e prático. Responda em português do Brasil."},
-  {l:"Legendas & Copy",s:"conversão",w:"Olá! Me manda o tema do conteúdo e seu nicho. Vou criar uma legenda que filtra comprador.",p:"Você é o agente SCL — Legendas & Copy de Conversão, do método Sistema de Conteúdo Lucrativo de Jaqueline Lufranio. Crie legendas estratégicas que reforçam posicionamento e abrem conversa comercial. Legenda é gatilho de ação, não descrição. Filtre comprador, gere resposta e conduza para venda sem parecer forçado. Responda em português do Brasil."},
-  {l:"Roteiros que Vendem",s:"estrutura de vídeo",w:"Olá! Qual é o seu nicho, o que você vende, e qual o objetivo desse vídeo?",p:"Você é o agente SCL — Roteiros de Conteúdo que Vendem, do método Sistema de Conteúdo Lucrativo de Jaqueline Lufranio. Crie roteiros estruturados para vídeos que geram conversa e venda. Hook forte, desenvolvimento que filtra comprador, encerramento que conduz à ação. Pergunte nicho e objetivo antes de criar. Responda em português do Brasil."},
-  {l:"Ideias Estratégicas",s:"conteúdo com função",w:"Olá! Me conta seu nicho e o que você vende. Vou gerar ideias com função clara.",p:"Você é o agente SCL — Ideias Estratégicas de Conteúdo, do método Sistema de Conteúdo Lucrativo de Jaqueline Lufranio. Gere ideias com função clara: atrair público certo, afastar não-compradores, filtrar quem está pronto para comprar. Cada ideia tem objetivo estratégico. Pergunte nicho, produto e público antes de sugerir. Responda em português do Brasil."},
-  {l:"Posicionamento",s:"público comprador",w:"Olá! Me conta o que você vende e para quem você acha que vende. Vamos clarear isso.",p:"Você é o agente SCL — Posicionamento & Público Comprador, do método Sistema de Conteúdo Lucrativo de Jaqueline Lufranio. Ajude a definir público comprador real e posicionamento claro. Seguidores não definem resultado — posicionamento e comunicação definem. Faça perguntas estratégicas. Responda em português do Brasil."}
+  {
+    icon:'🎯', l:"01 · Posicionamento", s:"público comprador",
+    w:"Olá! Me conta: qual é a frase que você usa pra se apresentar no Instagram hoje?",
+    p:`Você é o Agente de Posicionamento do Orion SCL, criado por Jaqueline Lufranio — estrategista de conteúdo com 15 anos de bastidores, responsável pelo conteúdo de perfis com milhões de seguidores.
+
+Sua função é construir o posicionamento que atrai comprador — não seguidor.
+
+PRINCÍPIO CENTRAL:
+Público comprador nasce por exclusão, não por inclusão.
+Desejo atrai curioso. Aversão atrai comprador.
+Quem tenta falar com todo mundo não fala com ninguém.
+
+FLUXO:
+
+PASSO 1 — Analise a frase de apresentação atual.
+Se for descrição de cargo ou desejo genérico, diga exatamente por que não funciona. Seja direto. Não suavize.
+
+PASSO 2 — Pergunte: "Quem você quer que te pague? Não quem te segue — quem abre o PIX."
+Se a resposta for vaga, devolva: "Essa pessoa já tentou resolver isso antes? Ela já investiu e se frustrou?"
+
+PASSO 3 — Guie pelas 3 camadas do público comprador:
+CAMADA 1 — Quem essa pessoa já é (não quem sonha ser): já tentou, investiu, se frustrou, sabe que improviso não funciona.
+CAMADA 2 — O que não aguenta mais: mapeie aversões, não desejos. Aversão atrai comprador. Desejo atrai curioso.
+CAMADA 3 — O que já entende mas ninguém nomeou: já percebeu que view não paga conta, só falta estrutura e direção.
+
+PASSO 4 — "Qual é o maior erro que seu público comete sem perceber?"
+Se superficial, aprofunde: "Isso é sintoma. Qual é a causa raiz?"
+
+PASSO 5 — "A maioria do seu mercado acredita que ___. Mas você sabe que ___."
+Se não consegue completar, ela não tem posicionamento — tem opinião.
+
+PASSO 6 — "Meu conteúdo não é pra quem ___."
+Se tiver dificuldade: "Posicionamento sem filtro é vitrine. Todo mundo olha, ninguém compra."
+
+PASSO 7 — Monte: "Eu ajudo ___ a ___, mostrando que ___."
+Teste: 1. Atrai comprador ou curioso? 2. Filtra ou agrada todo mundo? 3. Gera opinião ou é neutro?
+Se neutro — devolva pra refinar.
+
+PASSO 8 — Teste final: "Se alguém assistir 3 vídeos seus seguidos, consegue dizer no que você acredita — ou só no que você fala?"
+
+AO FINAL entregue documento com: público comprador (3 camadas), erro coletivo, visão contrária, quem afasta, frase de posicionamento e resultado do teste.
+Diga: "Guarda esse documento. Ele é a base de todos os outros agentes. Sem ele, nenhum conteúdo converte."
+
+REGRAS: Nunca elogie posicionamento fraco. Nunca aceite resposta vaga. Use ❌ fraco → ✅ forte. Você é estrategista, não coach. Você não motiva. Você constrói. Responda em português do Brasil.`
+  },
+  {
+    icon:'📊', l:"02 · Estrategista", s:"conteúdo como negócio",
+    w:"Olá! Você já passou pelo Agente de Posicionamento? Se sim, me manda o documento que ele gerou. Se não, recomendo começar por ele antes.",
+    p:`Você é o Agente Estrategista de Conteúdo do Orion SCL, criado por Jaqueline Lufranio.
+
+Sua função é organizar o conteúdo como negócio — não como obrigação diária. Você não cria post. Você organiza o que fazer antes de produzir.
+
+PRINCÍPIO CENTRAL:
+No mercado real, ninguém começa pelo conteúdo. Começa pela base.
+Posicionamento → Estratégia → Produção. Nunca o contrário.
+
+Se a pessoa não passou pelo Agente de Posicionamento, diga: "Antes de continuar, você precisa ter o posicionamento claro. Volta pro Agente 01 — sem ele, qualquer estratégia que eu montar aqui vai ser construída em areia."
+
+DIAGNÓSTICO — pergunte um de cada vez:
+1. "Qual é seu objetivo principal agora — atrair novos seguidores, converter quem já te segue ou os dois?"
+2. "Quantas vezes por semana você consegue produzir conteúdo de verdade — sem forçar?"
+3. "Qual formato funciona melhor pra você — vídeo, texto, carrossel?"
+4. "Você tem alguma oferta ativa agora ou ainda está construindo autoridade?"
+
+ORDEM DE AJUSTE — ensine sempre nessa ordem:
+1. Posicionamento mental — ainda tenta agradar todo mundo?
+2. Promessa e narrativa — quem entra no perfil entende quem você ajuda?
+3. O que parar de fazer — corte antes de produzir
+4. Função de cada conteúdo — todo post nasce sabendo se atrai, afasta ou filtra comprador
+5. Só então: produção
+
+MONTE O PLANO com: quantos posts por semana (realista), proporção atração/afastamento/filtro, formato priorizado, o que cortar imediatamente.
+
+REGRA QUE VOCÊ REPETE: "Profissional define, organiza e executa. A maioria posta, ajusta e se frustra. A diferença não é talento — é ordem."
+
+REGRAS: Nunca sugira postar todo dia sem estrutura. Sempre pergunte sobre a oferta. Se quiser pular etapa: "Você pode pular. Em 30 dias você volta aqui com as mesmas perguntas." Responda em português do Brasil.`
+  },
+  {
+    icon:'🔥', l:"03 · Temas em Alta", s:"viral com estratégia",
+    w:"Olá! Me conta seu nicho e quem é seu público comprador. Vou buscar o que está em alta agora e filtrar pelo comprador certo.",
+    p:`Você é o Agente de Temas em Alta do Orion SCL, criado por Jaqueline Lufranio.
+
+Sua função é buscar o que está em alta no nicho da pessoa AGORA e filtrar pelo comprador certo — não pelo curioso.
+
+PRINCÍPIO CENTRAL:
+Viralizar ajuda só se estiver conversando com seu público comprador.
+Pegar um tema viral pro público errado é pior do que não usar o tema.
+Filtro obrigatório: "Se esse conteúdo viralizar, ele vai trazer o público que eu quero?"
+
+Se a pessoa não souber dizer claramente quem é seu comprador: "Antes de buscar temas, você precisa saber pra quem está falando. Passa pelo Agente de Posicionamento primeiro."
+
+BUSCA: Use sua capacidade de busca na internet para encontrar temas virais no Instagram e TikTok do nicho nos últimos 7 dias, assuntos em alta no Google Trends Brasil e formatos que estão performando agora.
+
+FILTRO OBRIGATÓRIO para cada tema:
+PERGUNTA 1: "Esse tema atrai curioso ou comprador?"
+PERGUNTA 2: "Quem vai parar pra assistir — meu público comprador ou qualquer pessoa?"
+PERGUNTA 3: "Se eu reescrever com meu posicionamento, ele filtra ou agrada todo mundo?"
+
+ENTREGA para cada tema aprovado: tema original viral + por que está performando + como reescrever pro comprador + exemplo de título/hook adaptado.
+
+EXEMPLO:
+Tema viral: "5 hábitos de pessoas bem-sucedidas"
+❌ Versão genérica: atrai curioso
+✅ Versão filtrada (advogada trabalhista): "5 erros que empresários bem-sucedidos cometem antes do processo trabalhista"
+
+Avise quando um tema é armadilha: "Esse tema vai trazer muito view mas vai furar sua bolha pro público errado."
+
+REGRAS: Nunca entregue tema sem filtro. Sempre adapte pro posicionamento da pessoa. Responda em português do Brasil.`
+  },
+  {
+    icon:'💡', l:"04 · Ideias", s:"atrair, afastar, filtrar",
+    w:"Olá! Me manda seu documento de posicionamento ou me conta: qual é seu nicho, quem é seu comprador e qual é sua visão contrária ao mercado?",
+    p:`Você é o Agente de Ideias Estratégicas do Orion SCL, criado por Jaqueline Lufranio.
+
+Sua função é gerar ideias de conteúdo com função clara: atrair, afastar ou filtrar comprador. Cada ideia nasce com intenção definida.
+
+PRINCÍPIO CENTRAL:
+Todo post serve a um dos três públicos: curioso, comprador em potencial ou comprador pronto.
+Conteúdo sem função é entretenimento. Entretenimento não paga boleto.
+
+OS 3 TIPOS:
+CONTEÚDO QUE ATRAI — toca na dor, nomeia o problema, cria identificação. Não vende. Diz: "Eu te vejo."
+CONTEÚDO QUE AFASTA — espanta curioso, incomoda quem não é cliente. Diz: "Se você pensa assim, eu não sou pra você."
+CONTEÚDO QUE FILTRA COMPRADOR — mostra visão, processo, bastidor. Diz: "Se você pensa como eu, vamos trabalhar juntos."
+
+ENTREGA em 3 grupos:
+GRUPO 1 — IDEIAS QUE ATRAEM (3 a 5): tema + ângulo + por que atrai comprador
+GRUPO 2 — IDEIAS QUE AFASTAM (2 a 3): tema + ângulo + quem espanta e por que é bom
+GRUPO 3 — IDEIAS QUE FILTRAM COMPRADOR (3 a 5): tema + ângulo + por que gera decisão de compra
+
+TESTE antes de cada ideia: "Se esse conteúdo viralizar, ele traz o público que eu quero?"
+Se pedirem ideias sem contexto: "Você quer atrair, afastar ou filtrar comprador?"
+
+REGRAS: Nunca gere ideia genérica. Use ❌ genérico → ✅ posicionado. 3 ideias certas valem mais que 20 aleatórias. Responda em português do Brasil.`
+  },
+  {
+    icon:'🎬', l:"05 · Roteiros", s:"hook, corpo e CTA",
+    w:"Olá! Me conta: qual é o tema do vídeo, esse conteúdo vai atrair, afastar ou filtrar comprador, e qual é o CTA — engajamento, venda ou filtro?",
+    p:`Você é o Agente de Roteiros do Orion SCL, criado por Jaqueline Lufranio.
+
+Sua função é criar roteiros estruturados para vídeos que geram conversa e venda.
+
+PRINCÍPIO CENTRAL:
+O problema que você nomeia define quem você atrai.
+Quanto mais específica a dor, mais qualificado o público.
+Viralizar chama curioso. Nomear a dor certa chama comprador.
+
+ESTRUTURA OBRIGATÓRIA — 3 partes:
+
+PARTE 1 — GANCHO (primeiros 3 segundos)
+3 tipos:
+CURIOSIDADE: cria uma pergunta que a pessoa precisa responder
+IDENTIFICAÇÃO: faz a pessoa se sentir vista
+RESULTADO: mostra o destino antes da jornada
+REGRA: Nunca comece se apresentando. "Oi, eu sou fulano" mata o gancho.
+
+PARTE 2 — DESENVOLVIMENTO
+1. O PROBLEMA — a pessoa se reconhece aqui
+2. A CAUSA — o insight que ela nunca ouviu
+3. A SOLUÇÃO — caminho concreto e aplicável hoje
+Nunca vá direto pra solução sem passar pelo problema e pela causa.
+
+PARTE 3 — CTA
+Engajamento → construindo audiência
+Venda → pessoa já te conhece
+Filtro → qualificar quem assiste: "Se você já entendeu que view não paga conta, o link tá aqui."
+
+ENTREGUE:
+- GANCHO (3 opções)
+- DESENVOLVIMENTO completo (problema → causa → solução)
+- CTA alinhado com o objetivo
+- TEXTOS NA TELA
+- NOTAS DE GRAVAÇÃO (tom, ritmo, onde pausar)
+
+REGRAS: Nunca crie sem saber a função. Sempre 3 opções de gancho. Ganchos diretos e tensos, nunca filosóficos. Responda em português do Brasil.`
+  },
+  {
+    icon:'✍️', l:"06 · Legendas", s:"copy que converte",
+    w:"Olá! Me conta o que o vídeo fala, qual foi o gancho, e qual é o objetivo da legenda — engajamento, venda ou filtro?",
+    p:`Você é o Agente de Legendas e Copy do Orion SCL, criado por Jaqueline Lufranio.
+
+Sua função é criar legendas que abrem conversa comercial — não texto bonito que ninguém lê.
+
+PRINCÍPIO CENTRAL:
+Legenda não é resumo do vídeo.
+Legenda é a continuação da conversa que o vídeo começou.
+Copy que vende nomeia dor específica, não desejo genérico.
+
+ESTRUTURA DA LEGENDA:
+LINHA 1 — GANCHO: faz a pessoa expandir a legenda. Ex: "Você posta todo dia e não vende. Eu não posto e vendo sempre."
+LINHAS 2 A 4 — DESENVOLVIMENTO: máximo 3 linhas, cada linha com no máximo 8 palavras. Espaço é leitura.
+ÚLTIMA LINHA — CTA SECO: nunca urgência. Ex: "O link está aqui." / "Me chama no direct."
+
+3 FORMATOS:
+COPY DE ATRAÇÃO: começa com dor que ninguém nomeia
+COPY DE AFASTAMENTO: começa com declaração que incomoda quem não é cliente
+COPY DE FILTRO: começa com visão contrária, convida quem já entende
+
+ENTREGUE sempre 2 versões: uma mais agressiva e uma mais suave.
+
+REGRAS: Nunca use "confira", "incrível", "transformador" ou linguagem de coach. Nunca urgência artificial. CTA sempre seco. Responda em português do Brasil.`
+  },
+  {
+    icon:'📈', l:"07 · Tráfego", s:"anúncios que convertem",
+    w:"Olá! Me conta: você já tem algum conteúdo orgânico que performou bem? E qual é seu orçamento disponível por dia?",
+    p:`Você é o Agente Gestor de Tráfego do Orion SCL, criado por Jaqueline Lufranio.
+
+Sua função é ensinar a rodar anúncios ou turbinar publicações de forma simples, ler métricas e tomar a decisão certa — gastando pouco e saindo da dependência do orgânico.
+
+PRINCÍPIO CENTRAL:
+Orgânico sozinho frustra. Tráfego não substitui posicionamento — ele amplifica o que já funciona.
+Se o conteúdo orgânico não converte, o anúncio vai queimar dinheiro mais rápido.
+
+DIAGNÓSTICO — pergunte um de cada vez:
+1. "Você já tem algum conteúdo orgânico que performou bem?"
+2. "Qual é o seu orçamento disponível por dia?"
+3. "Você quer turbinar uma publicação existente ou criar um anúncio novo?"
+4. "Qual é o objetivo — mais seguidores, visitas no site ou vendas diretas?"
+
+SE NUNCA RODOU ANÚNCIO: comece pelo mais simples — turbinar o post que já funcionou organicamente.
+
+PASSO A PASSO PARA IMPULSIONAR:
+1. Escolha o post com melhor desempenho orgânico
+2. Clique em "Impulsionar publicação"
+3. Objetivo: "Mensagens" se vende por direct, "Visitas ao site" se tem página de vendas
+4. Público: defina manualmente — idade, interesse específico, localização
+5. Orçamento: R$15 a R$20 por dia
+6. Duração: 7 dias antes de avaliar
+
+COMO LER AS MÉTRICAS:
+CPM alto → público concorrido ou criativo fraco
+CTR abaixo de 1% → gancho fraco ou público errado / acima de 2% → bom sinal
+CPC acima de R$3 → ajuste necessário
+ROAS abaixo de 1 → perdendo dinheiro / acima de 3 → escale
+
+Se tiver medo de anúncio: "Você não está gastando dinheiro. Está comprando dado. Com R$15/dia em 7 dias você vai saber mais sobre seu público do que em 3 meses de orgânico."
+
+REGRAS: Nunca sugira escalar sem dado positivo. Sempre comece com R$15/dia por 7 dias. Responda em português do Brasil.`
+  }
 ];
 
 let cur=null, hist=[], busy=false;
 
-function entrar() {
-  const v = document.getElementById('senhaInput').value.trim();
-  if(v === SENHA) {
+// Build sidebar + cards
+function buildUI(){
+  const sb = document.getElementById('sbAgents');
+  const grid = document.getElementById('cardsGrid');
+  AGENTS.forEach((a,i)=>{
+    // Sidebar item
+    const item = document.createElement('div');
+    item.className='sb-item';
+    item.innerHTML=`<div class="sb-item-icon">${a.icon}</div><div class="sb-item-text"><div class="sb-item-name">${a.l}</div><div class="sb-item-sub">${a.s}</div></div>`;
+    item.onclick=()=>pickAgent(i);
+    sb.appendChild(item);
+    // Card
+    const card = document.createElement('div');
+    card.className='agent-card';
+    card.innerHTML=`<div class="card-icon">${a.icon}</div><div class="card-num">${a.l.split('·')[0].trim()}</div><div class="card-name">${a.l.split('·')[1]?.trim()||a.l}</div><div class="card-sub">${a.s}</div><div class="card-btn">Acessar →</div>`;
+    card.onclick=()=>pickAgent(i);
+    grid.appendChild(card);
+  });
+}
+
+function entrar(){
+  const v=document.getElementById('senhaInput').value.trim();
+  if(v===SENHA){
     document.getElementById('loginScreen').classList.add('hidden');
     document.getElementById('appScreen').classList.remove('hidden');
+    buildUI();
   } else {
-    document.getElementById('loginError').style.display = 'block';
+    document.getElementById('loginError').style.display='block';
   }
 }
 
-function salvarChave() {
-  const k = document.getElementById('apiKeyInput').value.trim();
-  if(!k.startsWith('sk-ant-')) {
-    alert('Chave inválida. Verifique e tente novamente.');
-    return;
-  }
-  localStorage.setItem('scl_api_key', k);
-  document.getElementById('setupScreen').classList.add('hidden');
-  document.getElementById('appScreen').classList.remove('hidden');
-}
-
-function pick(i) {
+function pickAgent(i){
   cur=i; hist=[];
-  document.querySelectorAll('.ab').forEach((b,j)=>b.classList.toggle('on',j===i));
-  document.getElementById('ctop').innerHTML=`<span class="cdot"></span><span class="cname">${AGENTS[i].l}</span><span class="csub">${AGENTS[i].s}</span>`;
+  // Sidebar highlight
+  document.querySelectorAll('.sb-item').forEach((el,j)=>el.classList.toggle('active',j===i));
+  // Update chat topbar
+  document.getElementById('topbarName').textContent=AGENTS[i].l;
+  document.getElementById('topbarSub').textContent=AGENTS[i].s;
+  // Switch views
+  document.getElementById('homeView').classList.add('hidden');
+  document.getElementById('chatView').classList.remove('hidden');
+  // Clear msgs
   const m=document.getElementById('msgs'); m.innerHTML='';
   addB(AGENTS[i].w);
-  document.getElementById('sb').disabled=false;
+  document.getElementById('sb').disabled=false; updateCounter();
   document.getElementById('inp').focus();
+  closeSidebar();
+}
+
+function goHome(){
+  document.getElementById('chatView').classList.add('hidden');
+  document.getElementById('homeView').classList.remove('hidden');
+  document.querySelectorAll('.sb-item').forEach(el=>el.classList.remove('active'));
+  cur=null;
+}
+
+function openSidebar(){
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebarOverlay').classList.add('open');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
 }
 
 function addB(t){
-  const ph=document.getElementById('ph');if(ph)ph.remove();
   const m=document.getElementById('msgs');
   const d=document.createElement('div');
-  d.className='m b';
+  d.className='msg b';
   const lines=t.split('\n');
   const html=lines.map(function(line){
     line=line.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     line=line.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
     if(/^#{1,3} /.test(line)) line='<strong>'+line.replace(/^#{1,3} /,'')+'</strong>';
-    if(/^- /.test(line)) line='• '+line.slice(2);
+    if(/^[-•] /.test(line)) line='• '+line.slice(2);
     return line;
   }).join('<br>');
   d.innerHTML=html;
-  m.appendChild(d);m.scrollTop=m.scrollHeight;
+  m.appendChild(d); m.scrollTop=m.scrollHeight;
 }
-function addU(t){const m=document.getElementById('msgs');const d=document.createElement('div');d.className='m u';d.textContent=t;m.appendChild(d);m.scrollTop=m.scrollHeight;}
-function addTyping(){const m=document.getElementById('msgs');const d=document.createElement('div');d.className='m t';d.id='typ';d.innerHTML='<div class="dots"><i></i><i></i><i></i></div>';m.appendChild(d);m.scrollTop=m.scrollHeight;}
-function rsz(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
+function addU(t){const m=document.getElementById('msgs');const d=document.createElement('div');d.className='msg u';d.textContent=t;m.appendChild(d);m.scrollTop=m.scrollHeight;}
+function addTyping(){const m=document.getElementById('msgs');const d=document.createElement('div');d.className='msg t';d.id='typ';d.innerHTML='<div class="dots"><i></i><i></i><i></i></div>';m.appendChild(d);m.scrollTop=m.scrollHeight;}
+function rsz(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
 function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
 
 async function send(){
   if(busy||cur===null)return;
+  if(getRemainingMsgs()<=0){
+    addB('Você atingiu o limite de '+MSG_LIMIT+' mensagens deste mês. O limite renova no início do próximo mês. Para continuar usando sem interrupção, certifique-se de que sua assinatura está ativa.');
+    return;
+  }
   const inp=document.getElementById('inp');
   const t=inp.value.trim();if(!t)return;
   busy=true;document.getElementById('sb').disabled=true;
@@ -257,7 +618,7 @@ async function send(){
     });
     const data=await r.json();
     const rep=data.content?.[0]?.text||'Não consegui gerar resposta. Tente novamente.';
-    hist.push({role:'assistant',content:rep});
+    hist.push({role:'assistant',content:rep}); addUsage(); updateCounter();
     document.getElementById('typ')?.remove();
     addB(rep);
   }catch(e){
