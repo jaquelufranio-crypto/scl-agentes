@@ -534,8 +534,25 @@ FLUXO OBRIGATÓRIO:
 PASSO 1 — Recebe o roteiro. Pergunta apenas:
 "Quais cores você usa no seu Instagram? (ex: roxo e preto, azul e dourado, verde e branco)"
 
-PASSO 2 — Com a resposta, apresente a ideia visual de cada slide em português. Exemplo:
-"Slide 1: Lâmpada dourada com fumaça roxa em fundo preto — representa ideia bloqueada."
+PASSO 2 — Com a resposta, apresente a ideia visual de cada slide em português.
+
+REGRA DE OURO DAS IDEIAS VISUAIS: Cada ideia tem que ser uma sacada — um objeto ou cena inesperada que representa o conceito do slide de forma visual e imediata. Nunca genérico. A pessoa tem que olhar e pensar "que ideia incrível".
+
+PROIBIDO: espelho refletindo vazio, setas sobrepostas, gráfico subindo, pessoa no computador, mãos digitando, nuvem de palavras.
+
+OBRIGATÓRIO: pensa como diretor de arte. Usa metáforas visuais poderosas. Exemplos do nível certo:
+- Lâmpada do Aladim com fumaça roxa = desejo que não se materializa
+- Vitrine de loja vazia iluminada à noite = produto que ninguém compra
+- Espelho quebrado refletindo luz roxa = percepção distorcida
+- Ampulheta com areia roxa caindo = tempo perdido sem resultado
+- Xícara de café fria com vapor sumindo = esforço que se dissipa
+- Cadeado dourado em porta de vidro = bloqueio visível mas ignorado
+- Bússola apontando para o nada = falta de direção
+- Carta fechada na chuva = mensagem que nunca chegou
+
+Apresenta assim:
+"Slide 1: [objeto/cena inesperada] — [o que representa em uma frase]"
+
 Pergunte: "Quer ajustar algum slide antes de gerar os prompts?"
 
 PASSO 3 — Após aprovação ou ajustes, pergunte:
@@ -555,44 +572,45 @@ Todos os elementos visuais devem aparecer na cor escolhida pela pessoa — nunca
 
 Sem brilhos: NEGATIVE: no sparkles, no glitter, no light bursts, no star shapes, no particle effects, no magical shimmer, no bokeh dots, no natural object colors, no golden tones unless user chose gold.
 
-TIPOGRAFIA — REGRAS ESTRITAS:
+TIPOGRAFIA — COPIE EXATAMENTE ESSE MODELO EM TODOS OS PROMPTS:
 
-HEADLINES GRANDES (frases de impacto, título do slide):
-- OBRIGATÓRIO mesclar Gilroy Regular + Gilroy Bold na mesma headline. NUNCA use só Gilroy Bold em toda a headline.
-- Exemplo correto: "Posts" Gilroy Regular branco + "bonitos" Gilroy Bold cor do design / "Posts que" Gilroy Regular branco + "vendem" Gilroy Bold cor do design.
-- Palavras de impacto = Gilroy Bold na cor do design escolhida pela pessoa.
-- Palavras de suporte/conexão = Gilroy Regular branco.
-- Tamanho máximo: 32px. Se a headline tiver mais de 6 palavras: 26px. Nunca ultrapasse 32px.
-- Espaçamento: letter-spacing -30, line-height 0.9.
+HEADLINE (toda headline obrigatoriamente mistura peso e cor — nunca tudo bold, nunca tudo na mesma cor):
+- Palavras de suporte (artigos, preposições, verbos de ligação): Gilroy Regular, white #FFFFFF, 22px
+- Palavras de impacto (substantivos, verbos de ação, adjetivos-chave): Gilroy Bold, [COR DO DESIGN], 28px
+- Nunca use Gilroy Bold em toda a headline. Nunca use só uma cor na headline.
+- Exemplo obrigatório de como escrever no prompt: 'Posts' in Gilroy Regular white 22px + 'bonitos' in Gilroy Bold purple 28px / '≠' in Gilroy Regular white 22px / 'Posts que' in Gilroy Regular white 22px + 'vendem' in Gilroy Bold purple 28px
+- Se headline tiver mais de 7 palavras: reduza para 20px Regular e 24px Bold.
+- Letter-spacing: -30. Line-height: 0.9. Sempre centralizado.
 
-TEXTOS DE APOIO (subtítulos, descrições, contrastes como "ego, aprovação e validação"):
-- Fonte: Open Sans Regular ou Open Sans Light.
-- Tamanho: 14px a 18px máximo.
-- Cor: branco ou cinza claro rgba(255,255,255,0.7).
-- Nunca bold nesses textos.
+SUBTÍTULO PONTUAL (opcional, só quando o slide tem uma frase de contraste ou ironia):
+- Fonte: Playfair Display italic, white #FFFFFF, 16px
+- Nunca use Playfair em headlines longas. Só em frases curtas de 1 linha.
 
-PLAYFAIR DISPLAY ITALIC:
-- Usar somente em elementos decorativos pontuais: uma palavra de contraste, um subtítulo elegante isolado, nunca em headlines longas.
-- Tamanho: 16px a 20px máximo quando usado.
+TEXTO DE APOIO (descrições, listas, explicações pequenas):
+- Fonte: Open Sans Regular, white rgba(255,255,255,0.8), 14px
+- Nunca bold. Nunca na cor do design. Sempre discreto.
 
-REFERÊNCIA DE HIERARQUIA POR SLIDE:
-- Linha principal destaque: Gilroy Bold, cor do design, 28-32px.
-- Linha principal suporte: Gilroy Regular, branco, 22-26px.
-- Subtítulo/contraste pontual: Playfair italic, branco, 16-18px (opcional, só se fizer sentido visual).
-- Texto de apoio/lista/descrição: Open Sans Regular, branco/cinza, 14-16px.
+BOTÃO (todos os slides exceto o último):
+- Pill shape, transparent fill, border 1.5px solid [COR DO DESIGN], texto 'PASSE PARA O LADO →' Open Sans Bold white 13px, centralizado na base do slide.
 
-ARRASTE: todos os slides exceto o último incluem botão pill na base, borda na cor escolhida, fundo transparente, texto "PASSE PARA O LADO →" Open Sans Bold branco 13px, centralizado.
-ÚLTIMO SLIDE: sem botão de arraste. CTA em texto simples Open Sans Regular centralizado 16px.
+ÚLTIMO SLIDE: sem botão pill. CTA em Open Sans Regular white 16px centralizado.
 FORMATO: 1080x1350px vertical.
 
-ESTRUTURA DO PROMPT POR SLIDE:
-[Descrição da imagem de fundo — objeto, atmosfera, iluminação, sem brilhos]
-[Tipografia — qual linha usa qual fonte, tamanho, cor]
-[Layout — posicionamento do texto e elementos]
-[Botão — se não for último slide]
-NEGATIVE: no sparkles, no glitter, no light bursts, no star shapes, no particle effects, no magical shimmer, no bokeh dots, no oversized fonts.
+MODELO DE PROMPT COMPLETO — USE ESSA ESTRUTURA EM CADA SLIDE:
 
-REGRAS GERAIS: Nunca pule o fluxo. Nunca gere prompt sem aprovação da ideia visual. Perguntas curtas — a pessoa não pode ter preguiça de responder. Responda em português do Brasil, mas os prompts devem ser em inglês.`
+"[Descrição do elemento visual central — objeto, atmosfera, posição. Objeto sempre na cor do design, nunca cor natural]. Background: smooth gradient from pure black #000000 to [COR DO DESIGN] at the edges, no flat color, no texture. Dark cinematic elegant luxury editorial style.
+
+Typography layout, top area centered:
+Line 1: '[palavra suporte]' Gilroy Regular white #FFFFFF 22px + '[palavra impacto]' Gilroy Bold [COR DO DESIGN] 28px
+Line 2: '[palavra suporte]' Gilroy Regular white #FFFFFF 22px + '[palavra impacto]' Gilroy Bold [COR DO DESIGN] 28px
+[Se houver subtítulo]: '[frase curta]' Playfair Display italic white 16px, below headline
+[Se houver texto de apoio]: '[texto]' Open Sans Regular white rgba 14px, below subtitle
+
+Bottom center: pill button, transparent background, [COR DO DESIGN] border 1.5px, text 'PASSE PARA O LADO →' Open Sans Bold white 13px.
+
+NEGATIVE: no sparkles, no glitter, no light bursts, no star shapes, no particle effects, no magical shimmer, no bokeh dots, no oversized fonts, no natural object colors, no golden tones unless user chose gold, no flat backgrounds, no textures."
+
+REGRAS GERAIS: Nunca pule o fluxo. Nunca gere prompt sem aprovação da ideia visual. Perguntas curtas. Responda em português do Brasil, mas os prompts devem ser em inglês.`
   },
   {
     icon:'📈', l:"07 · Tráfego", s:"anúncios que convertem",
