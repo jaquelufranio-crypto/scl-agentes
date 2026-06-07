@@ -82,7 +82,36 @@ html,body{height:100%;height:100dvh;background:#0a0015;font-family:'Inter',sans-
 .sb-chat-item{display:flex;align-items:center;gap:8px;padding:8px 8px;border-radius:8px;cursor:pointer;transition:all .15s;border:1px solid transparent;position:relative;group:true}
 .sb-chat-item:hover{background:rgba(255,255,255,.04)}
 .sb-chat-item.active-chat{background:rgba(192,132,252,.08);border-color:rgba(192,132,252,.15)}
-.sb-chat-icon{font-size:12px;flex-shrink:0;width:20px;text-align:center}
+.sb-agent-icon svg,.sb-chat-icon svg,.card-icon svg{width:14px;height:14px;stroke:#c084fc}
+.card-icon svg{width:18px;height:18px}
+.sb-chat-icon{font-size:12px;flex-shrink:0;width:20px;height:20px;display:flex;align-items:center;justify-content:center}
+
+/* ── SCAN ANIMATION (Temas em Alta) ── */
+.scan-overlay{position:fixed;inset:0;background:#0a0015;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:32px}
+.scan-box{width:220px;height:140px;border:1px solid rgba(192,132,252,.3);border-radius:12px;position:relative;overflow:hidden;background:rgba(192,132,252,.04)}
+.scan-corner{position:absolute;width:16px;height:16px;border-color:#c084fc;border-style:solid;border-width:0}
+.scan-corner.tl{top:0;left:0;border-top-width:2px;border-left-width:2px;border-radius:4px 0 0 0}
+.scan-corner.tr{top:0;right:0;border-top-width:2px;border-right-width:2px;border-radius:0 4px 0 0}
+.scan-corner.bl{bottom:0;left:0;border-bottom-width:2px;border-left-width:2px;border-radius:0 0 0 4px}
+.scan-corner.br{bottom:0;right:0;border-bottom-width:2px;border-right-width:2px;border-radius:0 0 4px 0}
+.scan-line{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#c084fc,transparent);box-shadow:0 0 8px rgba(192,132,252,.8);animation:scanMove 2s ease-in-out infinite}
+@keyframes scanMove{0%{top:0;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}
+.scan-dots-row{display:flex;gap:6px;position:absolute;bottom:12px;left:50%;transform:translateX(-50%)}
+.scan-dot{width:5px;height:5px;border-radius:50%;background:rgba(192,132,252,.3)}
+.scan-dot.active{background:#c084fc;box-shadow:0 0 6px rgba(192,132,252,.8)}
+.scan-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.8);text-align:center;letter-spacing:.03em}
+.scan-steps{display:flex;gap:12px;align-items:center}
+.scan-step{display:flex;flex-direction:column;align-items:center;gap:4px}
+.scan-step-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.15);transition:all .4s}
+.scan-step-dot.done{background:#c084fc;box-shadow:0 0 8px rgba(192,132,252,.6)}
+.scan-step-dot.current{background:#c084fc;animation:pulseDot 1s ease-in-out infinite}
+@keyframes pulseDot{0%,100%{box-shadow:0 0 4px rgba(192,132,252,.4)}50%{box-shadow:0 0 12px rgba(192,132,252,.9)}}
+.scan-step-line{width:32px;height:1px;background:rgba(255,255,255,.1)}
+.scan-step-line.done{background:rgba(192,132,252,.5)}
+.scan-step-label{font-size:9px;color:rgba(255,255,255,.3);font-weight:500;letter-spacing:.04em}
+.scan-step.current .scan-step-label{color:rgba(192,132,252,.8)}
+.scan-step.done .scan-step-label{color:rgba(192,132,252,.5)}
+.scan-sub{font-size:11px;color:rgba(255,255,255,.25);text-align:center}
 .sb-chat-info{flex:1;min-width:0}
 .sb-chat-name{font-size:11px;font-weight:500;color:rgba(255,255,255,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sb-chat-item.active-chat .sb-chat-name{color:#fff}
@@ -128,8 +157,39 @@ html,body{height:100%;height:100dvh;background:#0a0015;font-family:'Inter',sans-
 .card-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.4);border-radius:7px;padding:6px 12px;font-size:11px;font-weight:600;color:#c084fc}
 .agent-card:hover .card-btn{background:rgba(124,58,237,.35);color:#fff}
 
+/* ── CARDS PREMIUM (Temas em Alta + Prompt de Imagens) ── */
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.premium-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.agent-card.premium{background:linear-gradient(135deg,rgba(251,191,36,.07) 0%,rgba(245,158,11,.13) 100%);border:1px solid rgba(251,191,36,.35);position:relative;overflow:hidden}
+.agent-card.premium::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(251,191,36,.6),transparent)}
+.agent-card.premium:hover{background:linear-gradient(135deg,rgba(251,191,36,.13) 0%,rgba(245,158,11,.22) 100%);border-color:rgba(251,191,36,.6);transform:translateY(-2px);box-shadow:0 8px 32px rgba(245,158,11,.2)}
+.agent-card.premium .card-icon{background:rgba(251,191,36,.15);border-color:rgba(251,191,36,.4);box-shadow:0 0 14px rgba(251,191,36,.15)}
+.agent-card.premium .card-icon svg{stroke:#fbbf24}
+.agent-card.premium .card-num{color:rgba(251,191,36,.7)}
+.agent-card.premium .card-btn{background:rgba(245,158,11,.2);border:1px solid rgba(251,191,36,.45);color:#fbbf24}
+.agent-card.premium:hover .card-btn{background:rgba(245,158,11,.35);color:#fff}
+.premium-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);border-radius:20px;padding:3px 9px;font-size:8px;font-weight:800;letter-spacing:.1em;color:#fbbf24;text-transform:uppercase;margin-bottom:8px}
+
+/* ── CARROSSEL INFINITO (Prompt de Imagens) ── */
+.img-carousel{width:100%;height:190px;flex-shrink:0;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07);background:#000}
+.carousel-infinite-wrap{width:100%;height:100%;overflow:hidden}
+.carousel-infinite-track{display:flex;height:100%;gap:8px;width:max-content;animation:scrollInfinite 22s linear infinite}
+.carousel-infinite-track:hover{animation-play-state:paused}
+@keyframes scrollInfinite{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.carousel-img-item{height:100%;width:auto;flex-shrink:0;border-radius:6px;overflow:hidden}
+.carousel-img-item img{height:100%;width:auto;object-fit:cover;display:block;border-radius:6px}
+.carousel-gradient{position:absolute;bottom:0;left:0;right:0;height:50px;background:linear-gradient(to bottom,transparent,#0a0015);pointer-events:none;z-index:2}
+.carousel-gradient-l{position:absolute;top:0;left:0;bottom:0;width:40px;background:linear-gradient(to right,#0a0015,transparent);pointer-events:none;z-index:2}
+.carousel-gradient-r{position:absolute;top:0;right:0;bottom:0;width:40px;background:linear-gradient(to left,#0a0015,transparent);pointer-events:none;z-index:2}
+.carousel-label{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.6);border:1px solid rgba(251,191,36,.3);border-radius:6px;padding:4px 8px;font-size:9px;font-weight:700;letter-spacing:.1em;color:#fbbf24;text-transform:uppercase;backdrop-filter:blur(8px);z-index:3}
+
+/* ── BOTÃO VOLTAR AO MENU ── */
+.btn-home{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:7px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:11px;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0}
+.btn-home:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
+.btn-home svg{width:12px;height:12px;flex-shrink:0}
+
 /* ── CHAT VIEW ── */
-.chat-view{flex:1;display:flex;flex-direction:column;overflow:hidden;height:100%}
+.chat-view{flex:1;display:flex;flex-direction:column;overflow:hidden;height:100%;position:relative}
 .chat-topbar{padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.2);flex-shrink:0}
 .topbar-back{width:30px;height:30px;border-radius:7px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);display:none;align-items:center;justify-content:center;cursor:pointer;font-size:13px;flex-shrink:0}
 .topbar-dot{width:7px;height:7px;border-radius:50%;background:#c084fc;box-shadow:0 0 8px rgba(192,132,252,.8);flex-shrink:0}
@@ -263,12 +323,44 @@ html,body{height:100%;height:100dvh;background:#0a0015;font-family:'Inter',sans-
 
     <!-- CHAT -->
     <div class="chat-view hidden" id="chatView">
+      <!-- Scan overlay (Temas em Alta) -->
+      <div class="scan-overlay hidden" id="scanOverlay">
+        <div class="scan-label" id="scanLabel">Buscando tendências</div>
+        <div class="scan-box">
+          <div class="scan-corner tl"></div>
+          <div class="scan-corner tr"></div>
+          <div class="scan-corner bl"></div>
+          <div class="scan-corner br"></div>
+          <div class="scan-line"></div>
+        </div>
+        <div class="scan-steps">
+          <div class="scan-step" id="sstep0"><div class="scan-step-dot"></div><div class="scan-step-label">BUSCANDO</div></div>
+          <div class="scan-step-line" id="sline0"></div>
+          <div class="scan-step" id="sstep1"><div class="scan-step-dot"></div><div class="scan-step-label">ANALISANDO</div></div>
+          <div class="scan-step-line" id="sline1"></div>
+          <div class="scan-step" id="sstep2"><div class="scan-step-dot"></div><div class="scan-step-label">FILTRANDO</div></div>
+        </div>
+        <div class="scan-sub">Isso pode levar até 30 segundos</div>
+      </div>
       <div class="chat-topbar">
-        <div class="topbar-back" onclick="goHome()">←</div>
+        <div class="btn-home" onclick="goHome()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Menu
+        </div>
         <div class="topbar-dot"></div>
         <span class="topbar-name" id="topbarName">—</span>
         <span class="topbar-sub" id="topbarSub">—</span>
         <div class="topbar-new" onclick="newChat()">+ Novo chat</div>
+      </div>
+      <!-- Carrossel infinito (só Prompt de Imagens) -->
+      <div class="img-carousel hidden" id="imgCarousel">
+        <div class="carousel-label">Exemplos de output · Prompt de Imagens</div>
+        <div class="carousel-infinite-wrap">
+          <div class="carousel-infinite-track" id="carouselTrack"></div>
+        </div>
+        <div class="carousel-gradient"></div>
+        <div class="carousel-gradient-l"></div>
+        <div class="carousel-gradient-r"></div>
       </div>
       <div class="msgs" id="msgs"></div>
       <div class="input-area">
@@ -314,7 +406,9 @@ let chats = []; // [{id, agentIdx, title, messages:[{role,content}], created}]
 // ── AGENTS ──
 const AGENTS = [
   {
-    icon:'🎯', l:"01 · Posicionamento", s:"público comprador",
+    icon:'🎯',
+    svg:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`,
+    l:"01 · Posicionamento", s:"público comprador",
     w:"Olá! Me conta em uma frase: qual é seu nicho e o que você vende ou faz? Já começo a trabalhar no seu posicionamento.",
     p:`Você é o Agente de Posicionamento do Orion SCL, criado por Jaqueline Lufranio — estrategista de conteúdo com 15 anos de bastidores.
 
@@ -341,7 +435,9 @@ AO FINAL entregue documento completo com: público comprador (3 camadas), erro c
 REGRAS: Nunca peça documento de outra conversa. Trabalhe sempre com o que a pessoa trouxer agora. Use ❌ fraco → ✅ forte. Você é estrategista, não coach. Responda em português do Brasil.`
   },
   {
-    icon:'📊', l:"02 · Estrategista", s:"conteúdo como negócio",
+    icon:'📊',
+    svg:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
+    l:"02 · Estrategista", s:"conteúdo como negócio",
     w:"Olá! Me conta em uma frase: qual é seu nicho, o que você vende e qual é seu maior problema com conteúdo hoje?",
     p:`Você é o Agente Estrategista de Conteúdo do Orion SCL, criado por Jaqueline Lufranio.
 
@@ -370,7 +466,9 @@ REGRA: "Profissional define, organiza e executa. A maioria posta, ajusta e se fr
 REGRAS: Nunca sugira postar todo dia sem estrutura. Responda em português do Brasil.`
   },
   {
-    icon:'🔥', l:"03 · Temas em Alta", s:"viral com estratégia",
+    icon:'🔥',
+    svg:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>`,
+    l:"03 · Temas em Alta", s:"viral com estratégia",
     w:"Olá! Me conta seu nicho em uma frase — por exemplo: 'sou advogada trabalhista' ou 'vendo produtos de skincare'. Já busco o que está em alta pra você agora.",
     p:`Você é o Agente de Temas em Alta do Orion SCL, criado por Jaqueline Lufranio.
 
@@ -399,7 +497,9 @@ Avise quando tema é armadilha: "Esse tema vai trazer muito view mas vai furar s
 REGRAS: Nunca espere mais informação pra começar a busca. Entregue logo e refine depois. Responda em português do Brasil.`
   },
   {
-    icon:'💡', l:"04 · Ideias", s:"atrair, afastar, filtrar",
+    icon:'💡',
+    svg:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg>`,
+    l:"04 · Ideias", s:"atrair, afastar, filtrar",
     w:"Olá! Me conta em uma frase: qual é seu nicho e o que você vende? Já gero ideias estratégicas pra você.",
     p:`Você é o Agente de Ideias Estratégicas do Orion SCL, criado por Jaqueline Lufranio.
 
@@ -422,7 +522,9 @@ FILTRAM COMPRADOR (3-5 ideias): tema + ângulo + por que gera decisão de compra
 REGRAS: Nunca genérico. Use ❌ genérico → ✅ posicionado. Adapte sempre pro nicho específico. Responda em português do Brasil.`
   },
   {
-    icon:'🎬', l:"05 · Roteiros", s:"hook, corpo e CTA",
+    icon:'🎬',
+    svg:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>`,
+    l:"05 · Roteiros", s:"hook, corpo e CTA",
     w:"Olá! Me conta: qual é seu nicho e sobre o que você quer fazer o vídeo? Já monto o roteiro completo pra você.",
     p:`Você é o Agente de Roteiros do Orion SCL, criado por Jaqueline Lufranio.
 
@@ -461,7 +563,9 @@ ENTREGUE SEMPRE:
 REGRAS: Sempre 3 opções de gancho. Ganchos diretos e tensos, nunca filosóficos. Responda em português do Brasil.`
   },
   {
-    icon:'✍️', l:"06 · Legendas", s:"copy que converte",
+    icon:'✍️',
+    svg:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`,
+    l:"06 · Legendas", s:"copy que converte",
     w:"Olá! Me conta sobre o que é o vídeo ou post — pode ser uma frase. Já escrevo a legenda que converte pra você.",
     p:`Você é o Agente de Legendas e Copy do Orion SCL, criado por Jaqueline Lufranio.
 
@@ -486,7 +590,9 @@ ENTREGUE SEMPRE 2 versões: uma mais direta/agressiva e uma mais suave. Deixa a 
 REGRAS: Nunca "confira", "incrível", "transformador" ou linguagem de coach. Nunca urgência artificial. CTA sempre seco. Responda em português do Brasil.`
   },
   {
-    icon:'🎠', l:"08 · Carrossel", s:"roteiro que para o scroll",
+    icon:'🎠',
+    svg:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+    l:"08 · Carrossel", s:"roteiro que para o scroll",
     w:"Olá! Me conta em uma frase: qual é seu nicho e sobre o que você quer fazer o carrossel?",
     p:`Você é o Agente de Roteiro de Carrossel do Orion SCL, criado por Jaqueline Lufranio.
 
@@ -519,7 +625,9 @@ ENTREGUE SEMPRE:
 REGRAS: Máx 10 slides. Mínimo 5. Nunca genérico. Sempre adapta pro nicho. Responda em português do Brasil.`
   },
   {
-    icon:'🎨', l:"09 · Prompt de Imagens", s:"design dark luxury gerado por IA",
+    icon:'🎨',
+    svg:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>`,
+    l:"09 · Prompt de Imagens", s:"design dark luxury gerado por IA",
     w:"Olá! Me manda o roteiro do seu carrossel — pode colar aqui. Já começo a criar os prompts de imagem pra cada slide.",
     p:`Você é o Agente de Prompt Avançado de Imagens do Orion SCL, criado por Jaqueline Lufranio.
 
@@ -613,7 +721,9 @@ NEGATIVE: no glitter, no star shapes, no confetti, no oversized fonts, no natura
 REGRAS GERAIS: Nunca pule o fluxo. Nunca gere prompt sem aprovação da ideia visual. Perguntas curtas. Responda em português do Brasil, mas os prompts devem ser em inglês.`
   },
   {
-    icon:'📈', l:"07 · Tráfego", s:"anúncios que convertem",
+    icon:'📈',
+    svg:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
+    l:"07 · Tráfego", s:"anúncios que convertem",
     w:"Olá! Me conta: qual é seu nicho e você já rodou algum anúncio antes? Pode ser uma frase — já te ajudo a montar sua estratégia de tráfego.",
     p:`Você é o Agente Gestor de Tráfego do Orion SCL, criado por Jaqueline Lufranio.
 
@@ -658,21 +768,44 @@ function buildUI(){
   const agentsList = document.getElementById('sbAgentsList');
   const grid = document.getElementById('cardsGrid');
 
+  // Índices premium (Temas em Alta = 2, Prompt de Imagens = 7)
+  const PREMIUM_IDX = [2, 7];
+
+  // Reordenar: premium primeiro, depois os demais
+  const premiumAgents = PREMIUM_IDX.map(i=>({i, a:AGENTS[i]}));
+  const normalAgents  = AGENTS.map((a,i)=>({i,a})).filter(x=>!PREMIUM_IDX.includes(x.i));
+  const ordered = [...premiumAgents, ...normalAgents];
+
+  // Sidebar — mantém ordem original
   AGENTS.forEach((a,i)=>{
-    // Sidebar agent item
     const item = document.createElement('div');
     item.className='sb-agent-item';
     item.id=`agent-sb-${i}`;
-    item.innerHTML=`<div class="sb-agent-icon">${a.icon}</div><div class="sb-agent-name">${a.l}</div>`;
+    item.innerHTML=`<div class="sb-agent-icon">${a.svg||a.icon}</div><div class="sb-agent-name">${a.l}</div>`;
     item.onclick=()=>startNewChatForAgent(i);
     agentsList.appendChild(item);
+  });
 
-    // Home card
+  // Home grid: linha premium em cima (2 colunas), resto abaixo (grid normal)
+  const premiumRow = document.createElement('div');
+  premiumRow.className = 'premium-row';
+  grid.appendChild(premiumRow);
+
+  const normalGrid = document.createElement('div');
+  normalGrid.className = 'normal-grid';
+  normalGrid.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:14px';
+  grid.style.cssText = 'display:block'; // override para poder ter 2 linhas diferentes
+  grid.appendChild(normalGrid);
+
+  ordered.forEach(({i, a})=>{
+    const isPremium = PREMIUM_IDX.includes(i);
     const card = document.createElement('div');
-    card.className='agent-card';
-    card.innerHTML=`<div class="card-icon">${a.icon}</div><div class="card-num">${a.l.split('·')[0].trim()}</div><div class="card-name">${a.l.split('·')[1]?.trim()||a.l}</div><div class="card-sub">${a.s}</div><div class="card-btn">Acessar →</div>`;
-    card.onclick=()=>startNewChatForAgent(i);
-    grid.appendChild(card);
+    card.className = 'agent-card'+(isPremium?' premium':'');
+    const badge = isPremium ? `<div class="premium-badge">✦ Em Alta</div>` : '';
+    card.innerHTML = `<div class="card-icon">${a.svg||a.icon}</div>${badge}<div class="card-num">${a.l.split('·')[0].trim()}</div><div class="card-name">${a.l.split('·')[1]?.trim()||a.l}</div><div class="card-sub">${a.s}</div><div class="card-btn">Acessar →</div>`;
+    card.onclick = ()=>startNewChatForAgent(i);
+    if(isPremium) premiumRow.appendChild(card);
+    else normalGrid.appendChild(card);
   });
 
   renderChatsList();
@@ -697,7 +830,7 @@ function renderChatsList(){
     const preview = chat.messages.length>0 ? chat.messages[chat.messages.length-1].content.slice(0,40)+'...' : agent.s;
 
     item.innerHTML=`
-      <div class="sb-chat-icon">${agent.icon}</div>
+      <div class="sb-chat-icon">${agent.svg||agent.icon}</div>
       <div class="sb-chat-info">
         <div class="sb-chat-name">${chat.title}</div>
         <div class="sb-chat-preview">${preview}</div>
@@ -758,6 +891,9 @@ function openChat(chatId, agentIdx, isNew){
   document.getElementById('homeView').classList.add('hidden');
   document.getElementById('chatView').classList.remove('hidden');
 
+  // Carrossel de exemplos (só para agentes premium)
+  buildCarousel(agentIdx);
+
   // Render messages
   const m = document.getElementById('msgs');
   m.innerHTML='';
@@ -793,6 +929,7 @@ function goHome(){
   document.getElementById('homeView').classList.remove('hidden');
   document.querySelectorAll('.sb-agent-item').forEach(el=>el.classList.remove('active-agent'));
   document.querySelectorAll('.sb-chat-item').forEach(el=>el.classList.remove('active-chat'));
+  hideCarousel();
   curChatId=null;
   curAgentIdx=null;
 }
@@ -855,6 +992,81 @@ function entrar(){
   }
 }
 
+// ── CARROSSEL INFINITO (só Prompt de Imagens — agente índice 7) ──
+const CAROUSEL_IMAGES = [
+  'design_09_-_co_pia.png',
+  'design_10_-_co_pia.png',
+  'design_11_-_co_pia.png',
+  'design_12_-_co_pia.png',
+];
+
+function buildCarousel(agentIdx){
+  const carousel = document.getElementById('imgCarousel');
+  if(agentIdx !== 7){ carousel.classList.add('hidden'); return; }
+
+  carousel.classList.remove('hidden');
+  const track = document.getElementById('carouselTrack');
+  track.innerHTML = '';
+
+  // Duplicar imagens para loop infinito contínuo (original + cópia)
+  const allImgs = [...CAROUSEL_IMAGES, ...CAROUSEL_IMAGES];
+  allImgs.forEach(src=>{
+    const item = document.createElement('div');
+    item.className = 'carousel-img-item';
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = 'Exemplo de output';
+    img.loading = 'lazy';
+    item.appendChild(img);
+    track.appendChild(item);
+  });
+}
+
+function hideCarousel(){
+  document.getElementById('imgCarousel').classList.add('hidden');
+  document.getElementById('carouselTrack').innerHTML = '';
+}
+
+// ── SCAN ANIMATION ──
+const SCAN_STEPS = ['Buscando tendências','Analisando viralidade','Filtrando pelo comprador'];
+let scanTimer = null;
+
+function showScan(){
+  const ov = document.getElementById('scanOverlay');
+  ov.classList.remove('hidden');
+  document.getElementById('msgs').style.visibility='hidden';
+  // reset steps
+  [0,1,2].forEach(i=>{
+    const s=document.getElementById(`sstep${i}`);
+    s.className='scan-step';
+    s.querySelector('.scan-step-dot').className='scan-step-dot';
+    if(i<2) document.getElementById(`sline${i}`).className='scan-step-line';
+  });
+  let step=0;
+  document.getElementById('scanLabel').textContent=SCAN_STEPS[0];
+  document.getElementById('sstep0').classList.add('current');
+  document.getElementById('sstep0').querySelector('.scan-step-dot').classList.add('current');
+  scanTimer = setInterval(()=>{
+    const cur = document.getElementById(`sstep${step}`);
+    cur.classList.remove('current'); cur.classList.add('done');
+    cur.querySelector('.scan-step-dot').className='scan-step-dot done';
+    if(step<2) document.getElementById(`sline${step}`).classList.add('done');
+    step++;
+    if(step<3){
+      document.getElementById('scanLabel').textContent=SCAN_STEPS[step];
+      const nx=document.getElementById(`sstep${step}`);
+      nx.classList.add('current');
+      nx.querySelector('.scan-step-dot').className='scan-step-dot current';
+    }
+  }, 8000);
+}
+
+function hideScan(){
+  clearInterval(scanTimer);
+  document.getElementById('scanOverlay').classList.add('hidden');
+  document.getElementById('msgs').style.visibility='';
+}
+
 // ── SEND ──
 async function send(){
   if(busy||curChatId===null||curAgentIdx===null) return;
@@ -880,6 +1092,8 @@ async function send(){
   }
 
   addU(t); addTyping();
+  const isTemas = curAgentIdx === 2;
+  if(isTemas) showScan();
 
   // Build history for API (last 20 messages to avoid token overflow)
   const history = (chat?.messages||[]).slice(-20).map(m=>({role:m.role,content:m.content}));
@@ -902,9 +1116,11 @@ async function send(){
 
     addUsage();
     document.getElementById('typ')?.remove();
+    if(isTemas) hideScan();
     addB(rep);
   }catch(e){
     document.getElementById('typ')?.remove();
+    if(isTemas) hideScan();
     addB('Erro de conexão. Verifique sua internet e tente novamente.');
   }
   busy=false; document.getElementById('sb').disabled=false; inp.focus();
