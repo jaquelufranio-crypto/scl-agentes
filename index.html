@@ -383,17 +383,31 @@ html,body{height:100%;height:100dvh;background:#0a0015;font-family:'Inter',sans-
 </div>
 
 <script>
-const SENHA = 'SCL2026';
 const MSG_LIMIT = 400;
-const STORAGE_KEY = 'orion_usage';
 const CHATS_KEY = 'orion_chats';
+const WORKER_URL = 'https://green-darkness-8487.jaque-lufranio.workers.dev';
 
-// ── USAGE LIMIT ──
-function getUsage(){
-  try{const d=JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');const now=new Date();const month=now.getFullYear()+'-'+(now.getMonth()+1);if(d.month!==month)return{month,count:0};return d;}catch(e){return{month:'',count:0};}
+// ── USAGE LIMIT (controlado pelo Worker por email) ──
+async function getRemainingMsgs(){
+  try{
+    const user = JSON.parse(sessionStorage.getItem('orion_user')||'{}');
+    if(!user.email) return 0;
+    const res = await fetch(WORKER_URL+'/usage?email='+encodeURIComponent(user.email));
+    const data = await res.json();
+    return Math.max(0, MSG_LIMIT - (data.count||0));
+  }catch(e){ return MSG_LIMIT; }
 }
-function addUsage(){const d=getUsage();d.count++;localStorage.setItem(STORAGE_KEY,JSON.stringify(d));}
-function getRemainingMsgs(){return Math.max(0,MSG_LIMIT-getUsage().count);}
+async function addUsage(){
+  try{
+    const user = JSON.parse(sessionStorage.getItem('orion_user')||'{}');
+    if(!user.email) return;
+    await fetch(WORKER_URL+'/usage', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:user.email})
+    });
+  }catch(e){}
+}
 
 // ── CHAT STORAGE ──
 function loadChats(){
@@ -1128,7 +1142,8 @@ function hideScan(){
 // ── SEND ──
 async function send(){
   if(busy||curChatId===null||curAgentIdx===null) return;
-  if(getRemainingMsgs()<=0){
+  const remaining = await getRemainingMsgs();
+  if(remaining<=0){
     addB('Você atingiu o limite de '+MSG_LIMIT+' mensagens deste mês. O limite renova no início do próximo mês.');
     return;
   }
