@@ -262,10 +262,13 @@ html,body{height:100%;height:100dvh;background:#0a0015;font-family:'Inter',sans-
     <p class="login-badge">Sistema de Conteúdo Lucrativo</p>
     <h1 class="login-title">Orion <span>SCL</span></h1>
     <p class="login-sub">Inteligência treinada para transformar seu conteúdo em vendas</p>
-    <label class="login-label">Senha de acesso</label>
-    <input class="login-input" id="senhaInput" type="password" placeholder="Digite sua senha" onkeydown="if(event.key==='Enter')entrar()">
-    <button class="login-btn" onclick="entrar()">Acessar agora</button>
-    <p class="login-error" id="loginError">Senha incorreta. Tente novamente.</p>
+    <label class="login-label">Email</label>
+    <input class="login-input" id="emailInput" type="email" placeholder="seu@email.com" onkeydown="if(event.key==='Enter')entrar()">
+    <label class="login-label">Senha</label>
+    <input class="login-input" id="senhaInput" type="password" placeholder="Sua senha" onkeydown="if(event.key==='Enter')entrar()">
+    <button class="login-btn" id="loginBtn" onclick="entrar()">Acessar agora</button>
+    <p class="login-error" id="loginError">Email ou senha incorretos.</p>
+    <p style="font-size:11px;color:rgba(255,255,255,.3);margin-top:12px">Primeira vez? <a href="cadastro.html" style="color:#c084fc;text-decoration:none">Criar meu acesso</a></p>
     <p class="login-footer">Powered by <span>SCL ✦ Jaqueline Lufranio</span></p>
   </div>
 </div>
@@ -985,14 +988,43 @@ function rsz(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight
 function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
 
 // ── LOGIN ──
-function entrar(){
-  const v=document.getElementById('senhaInput').value.trim();
-  if(v===SENHA){
-    document.getElementById('loginScreen').classList.add('hidden');
-    document.getElementById('appScreen').classList.remove('hidden');
-    buildUI();
-  } else {
-    document.getElementById('loginError').style.display='block';
+async function entrar(){
+  const email = document.getElementById('emailInput').value.trim();
+  const senha = document.getElementById('senhaInput').value;
+  const btn = document.getElementById('loginBtn');
+  const err = document.getElementById('loginError');
+
+  if(!email || !senha){ err.style.display='block'; err.textContent='Preencha email e senha.'; return; }
+
+  btn.textContent = 'Entrando...';
+  btn.style.opacity = '0.6';
+  err.style.display = 'none';
+
+  try {
+    const res = await fetch('https://green-darkness-8487.jaque-lufranio.workers.dev/login', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ email, password: senha })
+    });
+    const data = await res.json();
+
+    if(data.success){
+      // Salva sessão local
+      sessionStorage.setItem('orion_user', JSON.stringify({ email: data.email, name: data.name }));
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('appScreen').classList.remove('hidden');
+      buildUI();
+    } else {
+      err.textContent = data.error || 'Email ou senha incorretos.';
+      err.style.display = 'block';
+      btn.textContent = 'Acessar agora';
+      btn.style.opacity = '1';
+    }
+  } catch(e) {
+    err.textContent = 'Erro de conexão. Tente novamente.';
+    err.style.display = 'block';
+    btn.textContent = 'Acessar agora';
+    btn.style.opacity = '1';
   }
 }
 
