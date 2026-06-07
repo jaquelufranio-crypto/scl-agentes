@@ -89,9 +89,10 @@ html,body{height:100%;height:100dvh;background:#0a0015;font-family:'Inter',sans-
 /* ── SCAN ANIMATION (Temas em Alta) ── */
 .scan-overlay{position:fixed;inset:0;background:#0a0015;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:32px}
 .scan-box{width:240px;height:240px;border-radius:12px;position:relative;overflow:hidden;background:#000;flex-shrink:0}
-.scan-box-bg{position:absolute;inset:0;background:url('scan.png') center/cover no-repeat;animation:radarSpin 4s linear infinite;transform-origin:center}
+.scan-box-bg{position:absolute;inset:-20px;background:url('scan.png') center/contain no-repeat;background-size:110%}
+.scan-box-sweep{position:absolute;inset:-20px;animation:radarSpin 3s linear infinite;transform-origin:center;background:conic-gradient(from 0deg,transparent 0deg,rgba(138,43,226,.35) 40deg,transparent 60deg);border-radius:50%}
 @keyframes radarSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-.scan-box-overlay{position:absolute;inset:0;background:radial-gradient(circle at center,transparent 30%,rgba(10,0,21,.6) 100%)}
+.scan-box-overlay{position:absolute;inset:0;background:radial-gradient(circle at center,transparent 25%,rgba(10,0,21,.55) 100%)}
 .scan-corner{position:absolute;width:20px;height:20px;border-color:#c084fc;border-style:solid;border-width:0;z-index:2}
 .scan-corner.tl{top:0;left:0;border-top-width:2.5px;border-left-width:2.5px;border-radius:4px 0 0 0}
 .scan-corner.tr{top:0;right:0;border-top-width:2.5px;border-right-width:2.5px;border-radius:0 4px 0 0}
@@ -174,9 +175,9 @@ html,body{height:100%;height:100dvh;background:#0a0015;font-family:'Inter',sans-
 /* ── CARROSSEL INFINITO (Prompt de Imagens) ── */
 .img-carousel{width:100%;height:190px;flex-shrink:0;position:relative;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07);background:#000}
 .carousel-infinite-wrap{width:100%;height:100%;overflow:hidden}
-.carousel-infinite-track{display:flex;height:100%;gap:8px;width:max-content;animation:scrollInfinite 22s linear infinite}
+.carousel-infinite-track{display:flex;height:100%;gap:8px;width:max-content;animation:scrollInfinite 28s linear infinite}
 .carousel-infinite-track:hover{animation-play-state:paused}
-@keyframes scrollInfinite{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes scrollInfinite{0%{transform:translateX(0)}100%{transform:translateX(var(--scroll-dist,-50%))}}
 .carousel-img-item{height:100%;width:auto;flex-shrink:0;border-radius:6px;overflow:hidden}
 .carousel-img-item img{height:100%;width:auto;object-fit:cover;display:block;border-radius:6px}
 .carousel-gradient{position:absolute;bottom:0;left:0;right:0;height:50px;background:linear-gradient(to bottom,transparent,#0a0015);pointer-events:none;z-index:2}
@@ -329,6 +330,7 @@ html,body{height:100%;height:100dvh;background:#0a0015;font-family:'Inter',sans-
         <div class="scan-label" id="scanLabel">Buscando tendências</div>
         <div class="scan-box">
           <div class="scan-box-bg"></div>
+          <div class="scan-box-sweep"></div>
           <div class="scan-box-overlay"></div>
           <div class="scan-corner tl"></div>
           <div class="scan-corner tr"></div>
@@ -996,6 +998,14 @@ function entrar(){
 
 // ── CARROSSEL INFINITO (só Prompt de Imagens — agente índice 7) ──
 const CAROUSEL_IMAGES = [
+  'design_01.png',
+  'design_02.png',
+  'design_03.png',
+  'design_04.png',
+  'design_05.png',
+  'design_06.png',
+  'design_07.png',
+  'design_08.png',
   'design_09_-_co_pia.png',
   'design_10_-_co_pia.png',
   'design_11_-_co_pia.png',
@@ -1010,17 +1020,31 @@ function buildCarousel(agentIdx){
   const track = document.getElementById('carouselTrack');
   track.innerHTML = '';
 
-  // Duplicar imagens para loop infinito contínuo (original + cópia)
-  const allImgs = [...CAROUSEL_IMAGES, ...CAROUSEL_IMAGES];
+  // Triplicar para garantir loop verdadeiramente contínuo sem gap
+  const allImgs = [...CAROUSEL_IMAGES, ...CAROUSEL_IMAGES, ...CAROUSEL_IMAGES];
   allImgs.forEach(src=>{
     const item = document.createElement('div');
     item.className = 'carousel-img-item';
     const img = document.createElement('img');
     img.src = src;
     img.alt = 'Exemplo de output';
-    img.loading = 'lazy';
+    img.loading = 'eager';
     item.appendChild(img);
     track.appendChild(item);
+  });
+
+  // Calcular largura real após imagens carregarem e ajustar animação
+  Promise.all(
+    Array.from(track.querySelectorAll('img')).map(img =>
+      img.complete ? Promise.resolve() : new Promise(r=>{ img.onload=r; img.onerror=r; })
+    )
+  ).then(()=>{
+    const totalW = track.scrollWidth;
+    const oneSetW = totalW / 3;
+    const duration = oneSetW / 60; // 60px por segundo
+    track.style.animation = 'none';
+    track.style.setProperty('--scroll-dist', `-${oneSetW}px`);
+    track.style.animation = `scrollInfinite ${duration}s linear infinite`;
   });
 }
 
